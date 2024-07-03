@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.b07demosummer2024"
+    namespace = "com.b07group47.taamcollectionmanager"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.b07demosummer2024"
+        applicationId = "com.b07group47.taamcollectionmanager"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

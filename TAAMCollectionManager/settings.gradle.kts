@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "TAAM Collection Manager"
+rootProject.name = "TAAMCollectionManager"
 include(":app")

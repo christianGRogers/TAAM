@@ -4,16 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.b07group47.taamcollectionmanager.AddItemFragment">
+    tools:context="com.b07group47.taamcollectionmanager.SearchFragment">
 
     <EditText
         android:id="@+id/editTextLotNumber"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/hint_lot_number"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:layout_width="402dp"
+        android:layout_height="46dp"
+        android:ems="10"
+        android:inputType="number" />
 
     <EditText
         android:id="@+id/editTextName"
@@ -43,11 +41,11 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextName" />
 
     <Button
-        android:id="@+id/buttonAdd"
+        android:id="@+id/buttonSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="@string/add_item"
+        android:text="@string/search_items"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"

@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.b07group47.taamcollectionmanager.R;
+
 public class ScrollerFragment extends Fragment {
     @Nullable
     @Override

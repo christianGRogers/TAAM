@@ -1,4 +1,4 @@
-package com.example.taamcollectionmanager;
+package com.b07group47.taamcollectionmanager;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.example.taamcollectionmanager", appContext.getPackageName());
+        assertEquals("com.example.b07demosummer2024", appContext.getPackageName());
     }
 }

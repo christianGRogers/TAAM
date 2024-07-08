@@ -32,7 +32,7 @@ public class DeleteItemFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_delete_item, container, false);
 
-        editTextTitle = view.findViewById(R.id.editTextTitle);
+        editTextTitle = view.findViewById(R.id.editTextLotNumber);
         spinnerCategory = view.findViewById(R.id.spinnerCategory);
         buttonDelete = view.findViewById(R.id.buttonDelete);
 
@@ -70,7 +70,7 @@ public class DeleteItemFragment extends Fragment {
                 boolean itemFound = false;
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Item item = snapshot.getValue(Item.class);
-                    if (item != null && item.getTitle().equalsIgnoreCase(title)) {
+                    if (item != null && item.getName().equalsIgnoreCase(title)) {
                         snapshot.getRef().removeValue().addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 Toast.makeText(getContext(), "Item deleted", Toast.LENGTH_SHORT).show();

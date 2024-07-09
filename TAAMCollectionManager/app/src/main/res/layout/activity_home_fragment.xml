@@ -11,20 +11,20 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/recyclerview"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/buttonScroller"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/buttonScroller"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/buttonScroller"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/scroller"
-        app:layout_constraintTop_toBottomOf="@+id/buttonRecyclerView"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSpinner"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSpinner"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonRecyclerView" />
 
     <Button
         android:id="@+id/buttonSpinner"
@@ -46,5 +46,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+        android:id="@+id/buttonAdmin"
+        android:layout_width="256dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="48dp"
+        android:text="@string/search_items"
+        app:layout_constraintBottom_toTopOf="@+id/buttonScroller"
+        app:layout_constraintTop_toBottomOf="@+id/buttonRecyclerView"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="77dp" />
+
+    <Button
+        android:id="@+id/buttonSearch"
+        android:layout_width="256dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="48dp"
+        android:text="@string/search_items"
+        app:layout_constraintBottom_toTopOf="@+id/buttonScroller"
+        app:layout_constraintTop_toBottomOf="@+id/buttonRecyclerView"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="77dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

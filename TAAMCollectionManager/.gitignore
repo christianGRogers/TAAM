@@ -13,4 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
-AndroidManifest.xml
+TAAMCollectionManager/app/src/main/AndroidManifest.xml
+app/.gitignore

@@ -32,7 +32,7 @@
             android:name=".HomeFragment"
             android:exported="false" />
         <activity
-            android:name=".Activity2"
+            android:name=".SearchFragment"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

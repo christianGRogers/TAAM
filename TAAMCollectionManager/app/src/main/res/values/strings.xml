@@ -16,11 +16,19 @@
     <string name="hint_category">Category</string>
     <string name="hint_period">Period</string>
 
+    <string name="admin">Admin</string>
+    <string name="helper">Helper</string>
+
     <string name="result">Result</string>
 
     <string-array name="categories_array">
         <item>Books</item>
         <item>Movies</item>
+    </string-array>
+
+    <string-array name="periods_array">
+        <item>Ming</item>
+        <item>Qing</item>
     </string-array>
 
 

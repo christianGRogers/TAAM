@@ -36,13 +36,7 @@ public class ViewFragment  extends Fragment{
 
         //todo
         //
-        back_btn.setOnClickListener(new View.OnClickListener(){
-
-            public void onClick(View v){
-                //todo
-                //go back
-            }
-        });
+        back_btn.setOnClickListener(v -> getParentFragmentManager().popBackStack());
 
         return view;
 

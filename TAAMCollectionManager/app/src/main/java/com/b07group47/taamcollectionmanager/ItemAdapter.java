@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.List;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
@@ -25,9 +26,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         Item item = itemList.get(position);
-        holder.textViewTitle.setText(item.getTitle());
-        holder.textViewAuthor.setText(item.getAuthor());
-        holder.textViewGenre.setText(item.getGenre());
+        holder.textViewTitle.setText(item.getName());
+        holder.textViewAuthor.setText(item.getCategory());
+        holder.textViewGenre.setText(item.getPeriod());
         holder.textViewDescription.setText(item.getDescription());
     }
 

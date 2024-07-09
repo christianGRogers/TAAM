@@ -13,5 +13,3 @@
 .externalNativeBuild
 .cxx
 local.properties
-TAAMCollectionManager/app/src/main/AndroidManifest.xml
-app/.gitignore

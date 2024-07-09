@@ -6,33 +6,34 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/ItemInfo"
+        android:id="@+id/itemInfo"
         android:layout_width="289dp"
         android:layout_height="332dp"
         android:text="Item info and description"
         app:layout_constraintBottom_toTopOf="@+id/back_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/item_image"
-        app:layout_constraintVertical_bias="0.507" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/back_btn"
-        android:layout_width="409dp"
+        android:layout_width="289dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="43dp"
         android:text="Back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/itemImage"
+        android:layout_width="289dp"
+        android:layout_height="306dp"
+        android:layout_marginBottom="424dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="640dp" />
-
-    <ImageButton
-        android:id="@+id/item_image"
-        android:layout_width="286dp"
-        android:layout_height="229dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="58dp"
         tools:srcCompat="@tools:sample/avatars" />
 </androidx.constraintlayout.widget.ConstraintLayout>

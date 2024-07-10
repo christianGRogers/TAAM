@@ -12,14 +12,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class AddItemFragment extends Fragment {
+public class SearchFragment extends Fragment {
     private EditText editTextLotNumber, editTextName;
     private Spinner spinnerCategory, spinnerPeriod;
-    private Button buttonAdd;
+    private Button buttonSearch;
 
     private FirebaseDatabase db;
     private DatabaseReference itemsRef;
@@ -27,13 +28,13 @@ public class AddItemFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_add_item, container, false);
+        View view = inflater.inflate(R.layout.fragment_search, container, false);
 
         editTextLotNumber = view.findViewById(R.id.editTextLotNumber);
         editTextName = view.findViewById(R.id.editTextName);
         spinnerCategory = view.findViewById(R.id.spinnerCategory);
         spinnerPeriod = view.findViewById(R.id.spinnerPeriod);
-        buttonAdd = view.findViewById(R.id.buttonAdd);
+        buttonSearch = view.findViewById(R.id.buttonSearch);
 
         db = FirebaseDatabase.getInstance("https://b07-demo-summer-2024-default-rtdb.firebaseio.com/");
 
@@ -43,17 +44,17 @@ public class AddItemFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategory.setAdapter(adapter);
 
-        buttonAdd.setOnClickListener(new View.OnClickListener() {
+        buttonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addItem();
+                searchItem();
             }
         });
 
         return view;
     }
 
-    private void addItem() {
+    private void searchItem() {
         String lotNumber = editTextLotNumber.getText().toString().trim();
         String name = editTextName.getText().toString().trim();
         String category = spinnerCategory.getSelectedItem().toString().toLowerCase();
@@ -65,7 +66,7 @@ public class AddItemFragment extends Fragment {
         }
 
         itemsRef = db.getReference("categories/" + category);
-        //String id = itemsRef.push().getKey();
+        //String lot_number = itemsRef.push().getKey();
         Item item = new Item(lotNumber, name, category, period);
 
         itemsRef.child(lotNumber).setValue(item).addOnCompleteListener(task -> {
@@ -75,5 +76,12 @@ public class AddItemFragment extends Fragment {
                 Toast.makeText(getContext(), "Failed to add item", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void loadFragment(Fragment fragment) {
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "975499749555",
+    "project_id": "sample-65dde",
+    "storage_bucket": "sample-65dde.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:975499749555:android:a1570600b4e64d724ca8c6",
+        "android_client_info": {
+          "package_name": "com.b07group47.taamcollectionmanager"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcRG7piTEE8flVHNgEj1FCBNAuLzW1duM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

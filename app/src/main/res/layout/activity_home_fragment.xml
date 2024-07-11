@@ -27,6 +27,16 @@
         app:layout_constraintTop_toBottomOf="@+id/buttonRecyclerView" />
 
     <Button
+        android:id="@+id/buttonReport"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Report"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSpinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonRecyclerView" />
+
+    <Button
         android:id="@+id/buttonSpinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

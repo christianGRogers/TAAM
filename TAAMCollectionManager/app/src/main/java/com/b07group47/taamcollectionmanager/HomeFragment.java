@@ -50,7 +50,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) { loadFragment(new ManageItemsFragment());}
         });
 
-        buttonManageItems.setOnClickListener(new View.OnClickListener() {
+        buttonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { loadFragment(new SearchFragment());}
         });

@@ -24,6 +24,13 @@ public class HomeFragment extends Fragment {
         Button buttonManageItems = view.findViewById(R.id.buttonManageItems);
         Button buttonSearch = view.findViewById(R.id.buttonSearch);
         Button buttonReport = view.findViewById(R.id.buttonReport);
+        Button dataTable = view.findViewById(R.id.data_table);
+
+        dataTable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFragment(new MainTableFragment());}
+        });
 
         buttonRecyclerView.setOnClickListener(new View.OnClickListener() {
             @Override

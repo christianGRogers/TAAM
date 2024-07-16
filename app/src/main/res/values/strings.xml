@@ -10,7 +10,7 @@
     <string name="spinner">Spinner</string>
     <string name="manage_items">Manage Items</string>
     <string name="search_items">Search Items</string>
-
+    <string name="data_table">data table</string>
     <string name="hint_lot_number">Lot#</string>
     <string name="hint_name">Name</string>
     <string name="hint_category">Category</string>

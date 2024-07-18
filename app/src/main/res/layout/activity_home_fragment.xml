@@ -1,93 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    style="@style/ScreenStyle"
     tools:context="com.b07group47.taamcollectionmanager.HomeFragment">
 
-    <Button
-        android:id="@+id/buttonRecyclerView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/recyclerview"
-        app:layout_constraintBottom_toTopOf="@+id/buttonScroller"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<!--    <Button-->
+<!--        android:id="@+id/buttonRecyclerView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/recyclerview"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/buttonScroller"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:useDefaultMargins="true"
+        android:alignmentMode="alignMargins"
+        android:columnCount="1"
+        android:rowCount="3">
 
-    <Button
-        android:id="@+id/buttonScroller"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/scroller"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSpinner"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonRecyclerView" />
+        <LinearLayout
+            android:layout_rowWeight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="right">
+            <Button
+                android:id="@+id/buttonAdmin"
+                style="@style/ButtonStyle"
+                android:text="@string/admin" />
+        </LinearLayout>
 
-    <Button
-        android:id="@+id/buttonReport"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Report"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSpinner"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonRecyclerView" />
+        <LinearLayout
+            android:layout_rowWeight="8"
+            android:gravity="center"
+            android:layout_width="match_parent">
+            <Button
+                android:id="@+id/data_table"
+                style="@style/ButtonStyle"
+                android:text="@string/data_table" />
+        </LinearLayout>
 
-    <Button
-        android:id="@+id/buttonSpinner"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/spinner"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonScroller" />
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:layout_rowWeight="1"
+            android:columnCount="1"
+            android:rowCount="2">
 
-    <Button
-        android:id="@+id/buttonManageItems"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/manage_items"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSpinner"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:showDividers="middle"
+                android:gravity="center"
+                android:divider="@drawable/grid_divider">
+                <Button
+                    android:id="@+id/buttonView"
+                    style="@style/ButtonStyle"
+                    android:text="@string/view_items"
+                    android:layout_gravity="center"
+                    android:gravity="center"/>
 
-    <Button
-        android:id="@+id/buttonSearch"
-        android:layout_width="256dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="48dp"
-        android:text="@string/search_items"
-        app:layout_constraintBottom_toTopOf="@+id/buttonScroller"
-        app:layout_constraintTop_toBottomOf="@+id/buttonRecyclerView"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="77dp" />
+                <Button
+                    android:id="@+id/buttonSearch"
+                    style="@style/ButtonStyle"
+                    android:layout_gravity="center"
+                    android:text="@string/search_items" />
 
-    <Button
-        android:id="@+id/buttonAdmin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/admin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+                <Button
+                    android:id="@+id/buttonReport"
+                    style="@style/ButtonStyle"
+                    android:layout_gravity="center"
+                    android:text="Report" />
+            </LinearLayout>
 
-    <Button
-        android:id="@+id/data_table"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/data_table"
-        app:layout_constraintBottom_toTopOf="@+id/buttonScroller"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="@+id/buttonReport"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSpinner"
-        app:layout_constraintVertical_bias="0.508" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:showDividers="middle"
+                android:gravity="center"
+                android:divider="@drawable/grid_divider">
+                <Button
+                    android:id="@+id/buttonAddItem"
+                    style="@style/ButtonStyle"
+                    android:layout_gravity="center"
+                    android:text="@string/add_item"/>
 
+                <Button
+                    android:id="@+id/buttonDeleteItem"
+                    style="@style/ButtonStyle"
+                    android:layout_gravity="center"
+                    android:text="@string/delete_item"/>
+
+                <Button
+                    android:id="@+id/buttonBack"
+                    style="@style/ButtonStyle"
+                    android:layout_gravity="center"
+                    android:text="@string/back" />
+            </LinearLayout>
+        </GridLayout>
+    </GridLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

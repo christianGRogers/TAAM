@@ -20,9 +20,6 @@
             android:name=".Item"
             android:exported="false" />
         <activity
-            android:name=".Item2"
-            android:exported="false" />
-        <activity
             android:name=".SpinnerFragment"
             android:exported="false" />
         <activity

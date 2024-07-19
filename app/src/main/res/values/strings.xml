@@ -1,16 +1,10 @@
 <resources>
     <string name="app_name">B07 Demo Summer 2024</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="delete_item">Delete Item</string>
-    <string name="add_item">Add Item</string>
+    <string name="delete_item">Delete</string>
+    <string name="add_item">Add</string>
     <string name="back">Back</string>
-    <string name="recyclerview">RecyclerView</string>
-    <string name="scroller">Scroller</string>
-    <string name="spinner">Spinner</string>
-    <string name="manage_items">Manage Items</string>
-    <string name="search_items">Search Items</string>
-    <string name="data_table">data table</string>
+    <string name="search_items">Search</string>
+    <string name="data_table">Data table</string>
     <string name="hint_lot_number">Lot#</string>
     <string name="hint_name">Name</string>
     <string name="hint_category">Category</string>
@@ -20,6 +14,11 @@
     <string name="helper">Helper</string>
 
     <string name="result">Result</string>
+    <string name="action_sign_in">Sign In</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in_short">1234</string>
+    <string name="prompt_email">Username</string>
+    <string name="view_items">View</string>
 
     <string-array name="categories_array">
         <item>Books</item>

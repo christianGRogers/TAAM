@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Example: Update the document with new field
         Map<String, Object> update = new HashMap<>();
-        update.put("name", "your_mom");
+        update.put("hehe", "your_mom");
 
         db.collection("test").document("BrzGwRQqes8dWASlO72S")
                 .update(update)

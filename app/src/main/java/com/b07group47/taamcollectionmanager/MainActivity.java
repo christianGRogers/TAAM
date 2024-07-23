@@ -1,29 +1,49 @@
 package com.b07group47.taamcollectionmanager;
 
 import android.os.Bundle;
+import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.b07group47.taamcollectionmanager.R;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    FirebaseDatabase db;
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //db = FirebaseDatabase.getInstance("https://b07-demo-summer-2024-default-rtdb.firebaseio.com/");
-        //DatabaseReference myRef = db.getReference("testDemo");
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-//        myRef.setValue("B07 Demo!");
-        //myRef.child("movies").setValue("B07 Demo!");
+        // Example: Update the document with new field
+        Map<String, Object> update = new HashMap<>();
+        update.put("name", "your_mom");
+
+        db.collection("test").document("BrzGwRQqes8dWASlO72S")
+                .update(update)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully updated!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error updating document", e);
+                    }
+                });
 
         if (savedInstanceState == null) {
             loadFragment(new HomeFragment());

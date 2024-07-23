@@ -18,9 +18,9 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_home_fragment, container, false);
 
-        Button buttonRecyclerView = view.findViewById(R.id.buttonRecyclerView);
+
         Button buttonScroller = view.findViewById(R.id.buttonScroller);
-        Button buttonSpinner = view.findViewById(R.id.buttonSpinner);
+
         Button buttonManageItems = view.findViewById(R.id.buttonManageItems);
         Button buttonSearch = view.findViewById(R.id.buttonSearch);
         Button buttonAdmin = view.findViewById(R.id.buttonAdmin);
@@ -33,12 +33,7 @@ public class HomeFragment extends Fragment {
                 loadFragment(new MainTableFragment());}
         });
 
-        buttonRecyclerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadFragment(new RecyclerViewFragment());
-            }
-        });
+
 
         buttonScroller.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,12 +42,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        buttonSpinner.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadFragment(new SpinnerFragment());
-            }
-        });
+
 
         buttonManageItems.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +65,7 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    private void loadFragment(Fragment fragment) {
+    public void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
         transaction.addToBackStack(null);

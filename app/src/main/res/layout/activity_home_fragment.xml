@@ -7,87 +7,62 @@
     tools:context="com.b07group47.taamcollectionmanager.HomeFragment">
 
     <Button
-        android:id="@+id/buttonRecyclerView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/recyclerview"
-        app:layout_constraintBottom_toTopOf="@+id/buttonScroller"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
         android:id="@+id/buttonScroller"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/scroller"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSpinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonRecyclerView" />
+        tools:layout_editor_absoluteY="731dp" />
 
     <Button
         android:id="@+id/buttonReport"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Report"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSpinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonRecyclerView" />
-
-    <Button
-        android:id="@+id/buttonSpinner"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/spinner"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonScroller" />
+        tools:layout_editor_absoluteY="587dp" />
 
     <Button
         android:id="@+id/buttonManageItems"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="48dp"
         android:text="@string/manage_items"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSpinner"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/buttonSearch"
-        android:layout_width="256dp"
+        android:layout_width="388dp"
         android:layout_height="47dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginBottom="144dp"
         android:text="@string/search_items"
         app:layout_constraintBottom_toTopOf="@+id/buttonScroller"
-        app:layout_constraintTop_toBottomOf="@+id/buttonRecyclerView"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="77dp" />
+        tools:layout_editor_absoluteX="5dp" />
 
     <Button
         android:id="@+id/buttonAdmin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="24dp"
         android:text="@string/admin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/data_table"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="394dp"
+        android:layout_height="44dp"
+        android:layout_marginBottom="192dp"
         android:text="@string/data_table"
         app:layout_constraintBottom_toTopOf="@+id/buttonScroller"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="@+id/buttonReport"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSpinner"
-        app:layout_constraintVertical_bias="0.508" />
+        app:layout_constraintHorizontal_bias="0.168"
+        app:layout_constraintStart_toStartOf="@+id/buttonReport" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

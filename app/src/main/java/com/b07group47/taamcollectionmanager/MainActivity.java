@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,10 +26,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
         // Example: Update the document with new field
         Map<String, Object> update = new HashMap<>();
-        update.put("hehe", "your_mom");
+        update.put("test", "your_mom");
 
         db.collection("test").document("BrzGwRQqes8dWASlO72S")
                 .update(update)

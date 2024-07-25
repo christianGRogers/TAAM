@@ -1,37 +1,37 @@
 package com.b07group47.taamcollectionmanager;
 
 import android.os.Bundle;
+import android.widget.Button;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
-import com.google.firebase.database.FirebaseDatabase;
-
-public class MainActivity extends AppCompatActivity {
-
-    FirebaseDatabase db;
+public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.base_layout);
-
-        //db = FirebaseDatabase.getInstance("https://b07-demo-summer-2024-default-rtdb.firebaseio.com/");
-        //DatabaseReference myRef = db.getReference("testDemo");
-
-//        myRef.setValue("B07 Demo!");
-        //myRef.child("movies").setValue("B07 Demo!");
-
-        if (savedInstanceState == null) {
-            loadFragment(new HomeFragment());
-        }
+        initButtons();
     }
 
-    private void loadFragment(Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+    private void initButtons() {
+        // TODO: Embed data table into main screen
+        Button dataTable = findViewById(R.id.data_table);
+        Button buttonViewItems = findViewById(R.id.buttonView);
+        Button buttonSearch = findViewById(R.id.buttonSearch);
+        Button buttonReport = findViewById(R.id.buttonReport);
+        Button buttonAdd = findViewById(R.id.buttonAddItem);
+        Button buttonDelete = findViewById(R.id.buttonDeleteItem);
+        Button buttonBack = findViewById(R.id.buttonBack);
+
+        dataTable.setOnClickListener(v -> switchToActivity(this, MainTableActivity.class));
+        buttonViewItems.setOnClickListener(v -> switchToActivity(this, ViewActivity.class));
+        buttonSearch.setOnClickListener(v -> switchToActivity(this, SearchActivity.class));
+        buttonReport.setOnClickListener(v -> switchToActivity(this, ReportActivity.class));
+        buttonAdd.setOnClickListener(v -> switchToActivity(this, AddItemActivity.class));
+        buttonDelete.setOnClickListener(v -> switchToActivity(this, DeleteItemActivity.class));
+        buttonBack.setOnClickListener(v -> switchToActivity(this, MainActivity.class));
+    }
+
+    @Override
+    protected int getLayoutResourceId() {
+        return R.layout.activity_main;
     }
 }

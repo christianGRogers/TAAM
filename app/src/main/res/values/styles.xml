@@ -9,4 +9,9 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:padding">30dp</item>
     </style>
+    <style name="TitleBarStyle">
+        <item name="android:layout_columnWeight">1</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+    </style>
 </resources>

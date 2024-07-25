@@ -3,34 +3,23 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.b07group47.taamcollectionmanager.HomeFragment">
+    tools:context=".MainActivity">
 
-    <GridLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:useDefaultMargins="true"
-        android:alignmentMode="alignMargins"
-        android:columnCount="1"
-        android:rowCount="3">
+        android:baselineAligned="false"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_rowWeight="1"
+            android:layout_height="0dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="right">
-            <Button
-                android:id="@+id/buttonAdmin"
-                style="@style/ButtonStyle"
-                android:text="@string/admin" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_rowWeight="8"
+            android:layout_gravity="fill"
             android:gravity="center"
-            android:layout_width="match_parent">
+            android:layout_weight="8">
             <Button
                 android:id="@+id/data_table"
                 style="@style/ButtonStyle"
@@ -39,60 +28,73 @@
 
         <GridLayout
             android:layout_width="match_parent"
-            android:layout_gravity="center"
-            android:layout_rowWeight="1"
+            android:layout_height="0dp"
+            android:alignmentMode="alignMargins"
             android:columnCount="3"
             android:rowCount="2"
-            android:alignmentMode="alignMargins"
+            android:layout_weight="2"
             android:useDefaultMargins="true">
 
             <Button
-                android:layout_columnWeight="1"
                 android:id="@+id/buttonView"
                 style="@style/ButtonStyle"
-                android:text="@string/view_items"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
                 android:layout_gravity="fill"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:text="@string/view_items" />
 
             <Button
-                android:layout_columnWeight="1"
                 android:id="@+id/buttonSearch"
                 style="@style/ButtonStyle"
-                android:text="@string/search_items"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
                 android:layout_gravity="fill"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:text="@string/search_items" />
 
             <Button
-                android:layout_columnWeight="1"
                 android:id="@+id/buttonReport"
                 style="@style/ButtonStyle"
-                android:text="Report"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
                 android:layout_gravity="fill"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:text="Report" />
 
             <Button
-                android:layout_columnWeight="1"
                 android:id="@+id/buttonAddItem"
                 style="@style/ButtonStyle"
-                android:text="@string/add_item"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
                 android:layout_gravity="fill"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:text="@string/add_item" />
 
             <Button
-                android:layout_columnWeight="1"
                 android:id="@+id/buttonDeleteItem"
                 style="@style/ButtonStyle"
-                android:text="@string/delete_item"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
                 android:layout_gravity="fill"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:text="@string/delete_item" />
 
             <Button
-                android:layout_columnWeight="1"
                 android:id="@+id/buttonBack"
                 style="@style/ButtonStyle"
-                android:text="@string/back"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
                 android:layout_gravity="fill"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:text="@string/back" />
         </GridLayout>
-    </GridLayout>
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

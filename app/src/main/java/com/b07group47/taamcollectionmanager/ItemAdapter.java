@@ -9,8 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
@@ -47,32 +49,41 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
         TextView lotNum, cardHeader, cardDesc, cardCategory, cardPeriod;
-        ImageView cardImg;
+        ImageView cardImg, reportBtn, deleteBtn;
+        private final Context context;
+        private final List<Item> items;
 
         public ItemViewHolder(@NonNull View itemView, Context context, List<Item> items) {
             super(itemView);
+            this.context = context;
+            this.items = new ArrayList<>(items);
             lotNum = itemView.findViewById(R.id.lotNum);
             cardHeader = itemView.findViewById(R.id.cardHeader);
             cardDesc = itemView.findViewById(R.id.cardDescription);
             cardCategory = itemView.findViewById(R.id.cardCategory);
             cardPeriod = itemView.findViewById(R.id.cardPeriod);
             cardImg = itemView.findViewById(R.id.cardImage);
+            reportBtn = itemView.findViewById(R.id.reportIcon);
+            deleteBtn = itemView.findViewById(R.id.deleteIcon);
 
-            itemView.setOnClickListener(v -> {
-                int pos = getAdapterPosition();
+            itemView.setOnClickListener(v -> openActivity(ViewActivity.class));
+            reportBtn.setOnClickListener(v -> openActivity(ReportActivity.class));
+            deleteBtn.setOnClickListener(v -> openActivity(DeleteItemActivity.class));
+        }
 
-                if (pos != RecyclerView.NO_POSITION) {
-                    Intent i = new Intent(context, ViewActivity.class);
-                    i.putExtra("LOT", items.get(pos).getLotNumber());
-                    i.putExtra("TITLE", items.get(pos).getTitle());
-                    i.putExtra("DESCRIPTION", items.get(pos).getDescription());
-                    i.putExtra("CATEGORY", items.get(pos).getCategory());
-                    i.putExtra("PERIOD", items.get(pos).getPeriod());
-                    i.putExtra("IMAGE", items.get(pos).getImgID());
+        private void openActivity(Class<? extends AppCompatActivity> activity) {
+            int pos = getAdapterPosition();
 
-                    context.startActivity(i);
-                }
-            });
+            if (pos != RecyclerView.NO_POSITION) {
+                Intent i = new Intent(context, activity);
+                i.putExtra("LOT", items.get(pos).getLotNumber());
+                i.putExtra("TITLE", items.get(pos).getTitle());
+                i.putExtra("DESCRIPTION", items.get(pos).getDescription());
+                i.putExtra("CATEGORY", items.get(pos).getCategory());
+                i.putExtra("PERIOD", items.get(pos).getPeriod());
+                i.putExtra("IMAGE", items.get(pos).getImgID());
+                context.startActivity(i);
+            }
         }
     }
 }

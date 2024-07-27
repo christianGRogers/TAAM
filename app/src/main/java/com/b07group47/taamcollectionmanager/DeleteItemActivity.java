@@ -18,18 +18,22 @@ import com.google.firebase.database.ValueEventListener;
 public class DeleteItemActivity extends BaseActivity {
     private EditText editTextTitle;
     private Spinner spinnerCategory;
+    private Item item;
 
     private FirebaseDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        item = getPassedAttributes();
+        db = FirebaseDatabase.getInstance("https://b07-demo-summer-2024-default-rtdb.firebaseio.com/");
 
         editTextTitle = findViewById(R.id.editTextLotNumber);
         spinnerCategory = findViewById(R.id.spinnerCategory);
         Button buttonDelete = findViewById(R.id.buttonDelete);
 
-        db = FirebaseDatabase.getInstance("https://b07-demo-summer-2024-default-rtdb.firebaseio.com/");
+        // Auto-fills the title of the item in the main table that this activity was called from
+        editTextTitle.setText(item.getTitle());
 
         // Set up the spinner with categories
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,

@@ -11,25 +11,13 @@ import com.google.firebase.database.FirebaseDatabase;
 public class ViewActivity extends BaseActivity {
     private FirebaseDatabase db;
     private DatabaseReference itemsRef;
-    private String title, description, category, period;
-    private int lot, imageID;
+    private Item item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        getPassedAttributes();
+        item = getPassedAttributes();
         setLayoutValues();
-
-    }
-
-    private void getPassedAttributes() {
-        lot = getIntent().getIntExtra("LOT", 1);
-        title = getIntent().getStringExtra("TITLE");
-        description = getIntent().getStringExtra("DESCRIPTION");
-        category = getIntent().getStringExtra("CATEGORY");
-        period = getIntent().getStringExtra("PERIOD");
-        imageID = getIntent().getIntExtra("IMAGE", R.drawable.mew_vase);
     }
 
     private void setLayoutValues() {
@@ -40,12 +28,12 @@ public class ViewActivity extends BaseActivity {
         TextView itemPeriod = findViewById(R.id.itemPeriod);
         ImageView itemImage = findViewById(R.id.itemImage);
 
-        itemLot.setText("Lot# " + lot);
-        itemTitle.setText(title);
-        itemDescription.setText(description);
-        itemCategory.setText("Category: " + category);
-        itemPeriod.setText("Period:" + period);
-        itemImage.setImageResource(imageID);
+        itemLot.setText("Lot# " + item.getLotNumber());
+        itemTitle.setText(item.getTitle());
+        itemDescription.setText(item.getDescription());
+        itemCategory.setText("Category: " + item.getCategory());
+        itemPeriod.setText("Period:" + item.getPeriod());
+        itemImage.setImageResource(item.getImgID());
     }
 
     @Override

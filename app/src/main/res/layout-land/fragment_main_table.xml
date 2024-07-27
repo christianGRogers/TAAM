@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="1dp">
+
+    <Button
+        android:id="@+id/nextPG"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="next page" />
+
+    <Button
+        android:id="@+id/prevPage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="prev page" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="1">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/LotNum1"
+                android:layout_width="98dp"
+                android:layout_height="match_parent"
+                android:text="Lot#" />
+
+            <TextView
+                android:id="@+id/Name1"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:text="Name" />
+
+            <TextView
+                android:id="@+id/Category1"
+                android:layout_width="128dp"
+                android:layout_height="wrap_content"
+                android:text="Category" />
+
+            <TextView
+                android:id="@+id/Period1"
+                android:layout_width="22dp"
+                android:layout_height="wrap_content"
+                android:text="Period" />
+
+            <TextView
+                android:id="@+id/Description1"
+                android:layout_width="195dp"
+                android:layout_height="wrap_content"
+                android:text="Description" />
+
+            <TextView
+                android:id="@+id/PictureVideo1"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:text="Picture/Video" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <CheckBox
+                android:id="@+id/select1"
+                android:layout_width="22dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/LotNum2"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Lot#" />
+
+            <TextView
+                android:id="@+id/Name2"
+                android:layout_width="103dp"
+                android:layout_height="wrap_content"
+                android:text="Name" />
+
+            <TextView
+                android:id="@+id/Category2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Category" />
+
+            <TextView
+                android:id="@+id/Period2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Period" />
+
+            <TextView
+                android:id="@+id/Description2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Description" />
+
+            <TextView
+                android:id="@+id/PictureVideo2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Picture/Video" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <CheckBox
+                android:id="@+id/checkBox2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/LotNum3"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Lot#" />
+
+            <TextView
+                android:id="@+id/Name3"
+                android:layout_width="103dp"
+                android:layout_height="wrap_content"
+                android:text="Name" />
+
+            <TextView
+                android:id="@+id/Category3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Category" />
+
+            <TextView
+                android:id="@+id/Period3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Period" />
+
+            <TextView
+                android:id="@+id/Description3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Description" />
+
+            <TextView
+                android:id="@+id/PictureVideo3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Picture/Video" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <CheckBox
+                android:id="@+id/checkBox3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/LotNum4"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Lot#" />
+
+            <TextView
+                android:id="@+id/Name4"
+                android:layout_width="103dp"
+                android:layout_height="wrap_content"
+                android:text="Name" />
+
+            <TextView
+                android:id="@+id/Category4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Category" />
+
+            <TextView
+                android:id="@+id/Period4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Period" />
+
+            <TextView
+                android:id="@+id/Description4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Description" />
+
+            <TextView
+                android:id="@+id/PictureVideo4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Picture/Video" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <CheckBox
+                android:id="@+id/checkBox4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/LotNum5"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Lot#" />
+
+            <TextView
+                android:id="@+id/Name5"
+                android:layout_width="103dp"
+                android:layout_height="wrap_content"
+                android:text="Name" />
+
+            <TextView
+                android:id="@+id/Category5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Category" />
+
+            <TextView
+                android:id="@+id/Period5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Period" />
+
+            <TextView
+                android:id="@+id/Description5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Description" />
+
+            <TextView
+                android:id="@+id/PictureVideo5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Picture/Video" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <CheckBox
+                android:id="@+id/checkBox5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/LotNum6"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Lot#" />
+
+            <TextView
+                android:id="@+id/Name6"
+                android:layout_width="103dp"
+                android:layout_height="wrap_content"
+                android:text="Name" />
+
+            <TextView
+                android:id="@+id/Category6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Category" />
+
+            <TextView
+                android:id="@+id/Period6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Period" />
+
+            <TextView
+                android:id="@+id/Description6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Description" />
+
+            <TextView
+                android:id="@+id/PictureVideo6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Picture/Video" />
+        </TableRow>
+
+    </TableLayout>
+</LinearLayout>

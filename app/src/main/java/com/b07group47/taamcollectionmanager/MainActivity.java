@@ -1,37 +1,61 @@
 package com.b07group47.taamcollectionmanager;
 
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.database.FirebaseDatabase;
+import java.util.ArrayList;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
-
-    FirebaseDatabase db;
+public class MainActivity extends BaseActivity {
+    private final List<Item> itemList = new ArrayList<>();
+    private ItemAdapter itemAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.base_layout);
-
-        //db = FirebaseDatabase.getInstance("https://b07-demo-summer-2024-default-rtdb.firebaseio.com/");
-        //DatabaseReference myRef = db.getReference("testDemo");
-
-//        myRef.setValue("B07 Demo!");
-        //myRef.child("movies").setValue("B07 Demo!");
-
-        if (savedInstanceState == null) {
-            loadFragment(new HomeFragment());
-        }
+        initButtons();
+        createTable();
     }
 
-    private void loadFragment(Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+    private void initButtons() {
+//        Button buttonReport = findViewById(R.id.buttonReport);
+        ImageView buttonAdd = findViewById(R.id.buttonAddItem);
+//        Button buttonDelete = findViewById(R.id.buttonDeleteItem);
+
+//        buttonReport.setOnClickListener(v -> switchToActivity(this, ReportActivity.class));
+        buttonAdd.setOnClickListener(v -> switchToActivity(this, AddItemActivity.class));
+//        buttonDelete.setOnClickListener(v -> switchToActivity(this, DeleteItemActivity.class));
+    }
+
+    @Override
+    protected int getLayoutResourceId() {
+        return R.layout.activity_main;
+    }
+
+    private void createTable() {
+        RecyclerView recyclerView = findViewById(R.id.table_layout);
+        itemAdapter = new ItemAdapter(itemList, this);
+        recyclerView.setAdapter(itemAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.recycler_view_item_spacing);
+        recyclerView.addItemDecoration(new TableSpacing(spacingInPixels));
+        insertData();
+    }
+
+    private void insertData() {
+        int insertIndex = itemList.size();
+        for (int i=1; i<=6; i++){
+            itemList.add(new Item(i, "Mew Exhibition", "This is a display of the Mew Dynasty artful pottery and decor", "Mew", "100BC",  R.drawable.mew_vase));
+        }
+        itemAdapter.notifyItemInserted(insertIndex);
     }
 }

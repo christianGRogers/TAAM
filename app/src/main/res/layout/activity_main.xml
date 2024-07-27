@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/titleBarContainer"
+        android:name="com.b07group47.taamcollectionmanager.TitleBarFragment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout="@layout/fragment_title_bar" />
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:baselineAligned="false"-->
+<!--        android:orientation="vertical"-->
+<!--        android:padding="@dimen/screenPadding"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/titleBarContainer">-->
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_gravity="fill"-->
+<!--        android:layout_weight="8"-->
+<!--        android:gravity="center_horizontal"-->
+<!--        android:orientation="vertical"-->
+<!--        android:padding="@dimen/screenPadding"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/bottomGuideline"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/titleBarContainer">-->
+<!--        &lt;!&ndash;            Table Fragments go here&ndash;&gt;-->
+<!--        &lt;!&ndash;            <Button&ndash;&gt;-->
+<!--        &lt;!&ndash;                android:id="@+id/data_table"&ndash;&gt;-->
+<!--        &lt;!&ndash;                style="@style/ButtonStyle"&ndash;&gt;-->
+<!--        &lt;!&ndash;                android:text="@string/data_table" />&ndash;&gt;-->
+
+<!--    </LinearLayout>-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/table_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="@dimen/screenPadding"
+        android:layout_gravity="fill"
+        android:gravity="center_horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/bottomGuideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleBarContainer"
+        android:clipToPadding="false"/>
+
+<!--        <GridLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:layout_weight="2"-->
+<!--            android:alignmentMode="alignMargins"-->
+<!--            android:columnCount="3"-->
+<!--            android:rowCount="2"-->
+<!--            android:useDefaultMargins="true">-->
+
+<!--            <Button-->
+<!--                android:id="@+id/buttonView"-->
+<!--                style="@style/ButtonStyle"-->
+<!--                android:layout_rowWeight="1"-->
+<!--                android:layout_columnWeight="1"-->
+<!--                android:layout_gravity="fill"-->
+<!--                android:gravity="center"-->
+<!--                android:text="@string/view_items" />-->
+
+<!--            <Button-->
+<!--                android:id="@+id/buttonSearch"-->
+<!--                style="@style/ButtonStyle"-->
+<!--                android:layout_rowWeight="1"-->
+<!--                android:layout_columnWeight="1"-->
+<!--                android:layout_gravity="fill"-->
+<!--                android:gravity="center"-->
+<!--                android:text="@string/search_items" />-->
+
+<!--            <Button-->
+<!--                android:id="@+id/buttonReport"-->
+<!--                style="@style/ButtonStyle"-->
+<!--                android:layout_rowWeight="1"-->
+<!--                android:layout_columnWeight="1"-->
+<!--                android:layout_gravity="fill"-->
+<!--                android:gravity="center"-->
+<!--                android:text="Report" />-->
+
+<!--            <Button-->
+<!--                android:id="@+id/buttonAddItem"-->
+<!--                style="@style/ButtonStyle"-->
+<!--                android:layout_rowWeight="1"-->
+<!--                android:layout_columnWeight="1"-->
+<!--                android:layout_gravity="fill"-->
+<!--                android:gravity="center"-->
+<!--                android:text="@string/add_item" />-->
+
+<!--            <Button-->
+<!--                android:id="@+id/buttonDeleteItem"-->
+<!--                style="@style/ButtonStyle"-->
+<!--                android:layout_rowWeight="1"-->
+<!--                android:layout_columnWeight="1"-->
+<!--                android:layout_gravity="fill"-->
+<!--                android:gravity="center"-->
+<!--                android:text="@string/delete_item" />-->
+
+<!--            <Button-->
+<!--                android:id="@+id/buttonBack"-->
+<!--                style="@style/ButtonStyle"-->
+<!--                android:layout_rowWeight="1"-->
+<!--                android:layout_columnWeight="1"-->
+<!--                android:layout_gravity="fill"-->
+<!--                android:gravity="center"-->
+<!--                android:text="@string/back" />-->
+<!--        </GridLayout>-->
+
+<!--    </LinearLayout>-->
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/bottomGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8" />
+
+    <ImageView
+        android:id="@+id/buttonAddItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:scaleX="2"
+        android:scaleY="2"
+        android:src="@drawable/add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/bottomGuideline" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -50,9 +50,17 @@ public class AddItemActivity extends BaseActivity {
             return;
         }
 
+        int lot;
+        try {
+            lot = Integer.parseInt(lotNumber);
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "Lot number must be a number value!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         DatabaseReference itemsRef = db.getReference("categories/" + category);
         //String id = itemsRef.push().getKey();
-        Item item = new Item(lotNumber, name, category, period);
+        Item item = new Item(lot, "description", name, category, period, R.drawable.mew_vase);
 
         itemsRef.child(lotNumber).setValue(item).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {

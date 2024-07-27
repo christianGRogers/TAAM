@@ -1,19 +1,13 @@
 package com.b07group47.taamcollectionmanager;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -67,7 +61,7 @@ public class DeleteItemActivity extends BaseActivity {
                 boolean itemFound = false;
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Item item = snapshot.getValue(Item.class);
-                    if (item != null && item.getName().equalsIgnoreCase(title)) {
+                    if (item != null && item.getTitle().equalsIgnoreCase(title)) {
                         snapshot.getRef().removeValue().addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 Toast.makeText(getApplicationContext(), "Item deleted", Toast.LENGTH_SHORT).show();

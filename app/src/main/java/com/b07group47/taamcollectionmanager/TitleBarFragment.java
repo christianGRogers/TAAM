@@ -37,8 +37,10 @@ public class TitleBarFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_title_bar, container, false);
         ImageView backButton = view.findViewById(R.id.backButton);
+        ImageView searchButton = view.findViewById(R.id.searchIcon);
         ImageView adminButton = view.findViewById(R.id.adminIcon);
         adminButton.setOnClickListener(v -> startActivity(new Intent(getContext(), AdminActivity.class)));
+        searchButton.setOnClickListener(v -> startActivity(new Intent(getContext(), SearchActivity.class)));
 
         if (isMainScreen) {
             backButton.setVisibility(View.INVISIBLE);
@@ -47,9 +49,11 @@ public class TitleBarFragment extends Fragment {
         }
 
         backButton.setOnClickListener(v -> {
-            if (getActivity() != null) {
-                getActivity().onBackPressed();
+            if (getActivity() == null) {
+                return;
             }
+
+            getActivity().onBackPressed();
         });
 
         return view;

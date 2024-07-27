@@ -7,6 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".SearchActivity">
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/titleBarContainer"
+        android:name="com.b07group47.taamcollectionmanager.TitleBarFragment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout="@layout/fragment_title_bar" />
+
     <EditText
         android:id="@+id/editTextLotNumber"
         android:layout_width="402dp"
@@ -15,7 +25,7 @@
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/titleBarContainer" />
 
     <EditText
         android:id="@+id/editTextName"

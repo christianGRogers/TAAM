@@ -26,14 +26,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private void createTitleBar() {
         boolean isMainScreen = layoutID == R.layout.activity_main;
         TitleBarFragment titleBarFragment = TitleBarFragment.newInstance(isMainScreen);
-
-        FrameLayout fragmentContainer = new FrameLayout(this);
-        fragmentContainer.setId(View.generateViewId());
-
-        ViewGroup rootLayout = findViewById(R.id.root_layout);
-        rootLayout.addView(fragmentContainer, 0, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-        getSupportFragmentManager().beginTransaction().replace(fragmentContainer.getId(), titleBarFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.titleBarContainer, titleBarFragment).commit();
     }
 
     protected void switchToActivity(Context context, Class<? extends AppCompatActivity> activity) {

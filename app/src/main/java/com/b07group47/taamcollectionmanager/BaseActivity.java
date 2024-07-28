@@ -29,7 +29,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.titleBarContainer, titleBarFragment).commit();
     }
 
-    protected void switchToActivity(Context context, Class<? extends AppCompatActivity> activity) {
-        startActivity(new Intent(context, activity));
+    protected void switchToActivity(Context context, Intent intent) {
+        startActivity(intent);
     }
 }

@@ -23,7 +23,6 @@ public class MainActivity extends BaseActivity {
     private final List<Item> itemList = new ArrayList<>();
     private ItemAdapter itemAdapter;
     private Button buttonReport;
-    private Button buttonDelete;
     private ImageView buttonAdd;
 
     @Override
@@ -37,9 +36,7 @@ public class MainActivity extends BaseActivity {
     private void initButtons() {
         buttonReport = findViewById(R.id.buttonReport);
         buttonAdd = findViewById(R.id.buttonAddItem);
-        buttonDelete = findViewById(R.id.buttonDeleteItem);
         buttonAdd.setOnClickListener(v -> switchToActivity(this, new Intent(this, AddItemActivity.class)));
-
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.b07group47.taamcollectionmanager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -14,76 +15,74 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 public class DeleteItemActivity extends BaseActivity {
-    private EditText editTextTitle;
-    private Spinner spinnerCategory;
-
-    private FirebaseDatabase db;
+    private int lot;
+    private FirebaseFirestore db;
+    private Button buttonDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        db = FirebaseFirestore.getInstance();
+        getLotFromintent();
+        initButtons();
+    }
 
-        editTextTitle = findViewById(R.id.editTextLotNumber);
-        spinnerCategory = findViewById(R.id.spinnerCategory);
-        Button buttonDelete = findViewById(R.id.buttonDelete);
 
-        db = FirebaseDatabase.getInstance("https://b07-demo-summer-2024-default-rtdb.firebaseio.com/");
-
-        // Set up the spinner with categories
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.categories_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerCategory.setAdapter(adapter);
-
+    private void initButtons(){
+        buttonDelete = findViewById(R.id.buttonDelete);
         buttonDelete.setOnClickListener(v -> deleteItemByTitle());
     }
+
+
+    private void getLotFromintent(){
+        lot = getIntent().getIntExtra("LOT", -1);
+    }
+
 
     @Override
     protected int getLayoutResourceId() {
         return R.layout.activity_delete_item;
     }
 
-    private void deleteItemByTitle() {
-        String title = editTextTitle.getText().toString().trim();
-        String category = spinnerCategory.getSelectedItem().toString().toLowerCase();
 
-        if (title.isEmpty()) {
-            Toast.makeText(this, "Please enter item title", Toast.LENGTH_SHORT).show();
+    private void backtoMain(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void deleteItemByTitle() {
+        if (this.lot == -1) {
+            Toast.makeText(DeleteItemActivity.this, "Invalid lot ID", Toast.LENGTH_SHORT).show();
+            backtoMain();
             return;
         }
 
-        DatabaseReference itemsRef = db.getReference("categories/" + category);
-        itemsRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                boolean itemFound = false;
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Item item = snapshot.getValue(Item.class);
-                    if (item != null && item.getTitle().equalsIgnoreCase(title)) {
-                        snapshot.getRef().removeValue().addOnCompleteListener(task -> {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(getApplicationContext(), "Item deleted", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(getApplicationContext(), "Failed to delete item", Toast.LENGTH_SHORT).show();
-                            }
+        Query query = db.collection("artifactData").whereEqualTo("lot", this.lot);
+        query.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful() && !task.getResult().isEmpty()) {
+                // Assuming there is only one document with the given lot value
+                task.getResult().getDocuments().get(0).getReference().delete()
+                        .addOnSuccessListener(aVoid -> {
+                            Toast.makeText(DeleteItemActivity.this, "Item deleted successfully", Toast.LENGTH_SHORT).show();
+                            backtoMain();
+                        })
+                        .addOnFailureListener(e -> {
+                            Toast.makeText(DeleteItemActivity.this, "Error deleting item", Toast.LENGTH_SHORT).show();
+                            backtoMain();
                         });
-                        itemFound = true;
-                        break;
-                    }
-                }
-                if (!itemFound) {
-                    Toast.makeText(getApplicationContext(), "Item not found", Toast.LENGTH_SHORT).show();
-                }
+            } else {
+                Toast.makeText(DeleteItemActivity.this, "Item not found", Toast.LENGTH_SHORT).show();
+                backtoMain();
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(getApplicationContext(), "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
+        }).addOnFailureListener(e -> {
+            Toast.makeText(DeleteItemActivity.this, "Error querying item", Toast.LENGTH_SHORT).show();
+            backtoMain();
         });
-
-
     }
+
 }

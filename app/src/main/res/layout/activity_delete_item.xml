@@ -24,23 +24,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleBarContainer">
 
-        <EditText
-            android:id="@+id/editTextLotNumber"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="Item Title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Spinner
-            android:id="@+id/spinnerCategory"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextLotNumber" />
-
         <Button
             android:id="@+id/buttonDelete"
             android:layout_width="wrap_content"
@@ -48,6 +31,6 @@
             android:text="Delete Item"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinnerCategory" />
+            tools:layout_editor_absoluteY="109dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

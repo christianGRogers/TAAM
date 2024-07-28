@@ -16,9 +16,6 @@
             android:name=".AddItemActivity"
             android:exported="false" />
         <activity
-            android:name=".MainTableActivity"
-            android:exported="false" />
-        <activity
             android:name=".DeleteItemActivity"
             android:exported="false" />
         <activity

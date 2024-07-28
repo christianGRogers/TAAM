@@ -8,7 +8,7 @@
     android:clipChildren="true"
     android:clipToOutline="true"
     android:elevation="@dimen/elevation_lg"
-    tools:context=".TableCard">
+    tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/lotNum"

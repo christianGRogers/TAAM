@@ -27,21 +27,26 @@ public class DeleteItemActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         item = getPassedAttributes();
         db = FirebaseDatabase.getInstance("https://b07-demo-summer-2024-default-rtdb.firebaseio.com/");
+        setLayoutValues();
 
-        editTextTitle = findViewById(R.id.editTextLotNumber);
         spinnerCategory = findViewById(R.id.spinnerCategory);
         Button buttonDelete = findViewById(R.id.buttonDelete);
 
-        // Auto-fills the title of the item in the main table that this activity was called from
-        editTextTitle.setText(item.getTitle());
-
         // Set up the spinner with categories
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.categories_array, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categories_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategory.setAdapter(adapter);
 
         buttonDelete.setOnClickListener(v -> deleteItemByTitle());
+    }
+
+    /**
+     * Auto-fills the appropriate values in the layout based on the attributes passed in the Intent
+     * which invoked the activity and which are stores in the 'item' object
+     */
+    private void setLayoutValues() {
+        editTextTitle = findViewById(R.id.editTextLotNumber);
+        editTextTitle.setText(item.getTitle());
     }
 
     @Override

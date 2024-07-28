@@ -1,6 +1,5 @@
 package com.b07group47.taamcollectionmanager;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,6 +19,10 @@ public class ViewActivity extends BaseActivity {
         setLayoutValues();
     }
 
+    /**
+     * Auto-fills the appropriate values in the layout based on the attributes passed in the Intent
+     * which invoked the activity and which are stores in the 'item' object
+     */
     private void setLayoutValues() {
         TextView itemLot = findViewById(R.id.itemLot);
         TextView itemTitle = findViewById(R.id.itemTitle);

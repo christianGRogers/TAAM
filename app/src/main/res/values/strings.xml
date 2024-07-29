@@ -9,6 +9,7 @@
     <string name="hint_name">Name</string>
     <string name="hint_category">Category</string>
     <string name="hint_period">Period</string>
+    <string name="hint_description">Description</string>
 
     <string name="admin">Admin</string>
     <string name="helper">Helper</string>
@@ -21,6 +22,7 @@
     <string name="view_items">View</string>
 
     <string-array name="categories_array">
+        <item>Category</item>
         <item>Jade</item>
         <item>Paintings</item>
         <item>Calligraphy</item>
@@ -32,6 +34,7 @@
         <item>Enamels</item>
     </string-array>
     <string-array name="periods_array">
+        <item>Period</item>
         <item>Xia</item>
         <item>Shang</item>
         <item>Zhou</item>

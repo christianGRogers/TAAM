@@ -6,12 +6,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.content.Intent;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class AddItemActivity extends BaseActivity {
-    private EditText editTextLotNumber, editTextName;
+    private EditText editTextLotNumber, editTextName, editTextDescription;
     private Spinner spinnerCategory, spinnerPeriod;
     private FirebaseDatabase db;
 
@@ -28,6 +29,7 @@ public class AddItemActivity extends BaseActivity {
         spinnerCategory = findViewById(R.id.spinnerCategory);
         spinnerPeriod = findViewById(R.id.spinnerPeriod);
         Button buttonAdd = findViewById(R.id.buttonAdd);
+        editTextDescription = findViewById(R.id.editTextDescription);
 
         db = FirebaseDatabase.getInstance("https://b07-demo-summer-2024-default-rtdb.firebaseio.com/");
 
@@ -35,6 +37,10 @@ public class AddItemActivity extends BaseActivity {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categories_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategory.setAdapter(adapter);
+
+        adapter = ArrayAdapter.createFromResource(this, R.array.periods_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerPeriod.setAdapter(adapter);
 
         buttonAdd.setOnClickListener(v -> addItem());
     }
@@ -44,6 +50,7 @@ public class AddItemActivity extends BaseActivity {
         String name = editTextName.getText().toString().trim();
         String category = spinnerCategory.getSelectedItem().toString().toLowerCase();
         String period = spinnerPeriod.getSelectedItem().toString().toLowerCase();
+        String description = editTextDescription.getText().toString().trim();
 
         if (lotNumber.isEmpty() || name.isEmpty() || category.isEmpty() || period.isEmpty()) {
             Toast.makeText(this, "Please fill out all fields", Toast.LENGTH_SHORT).show();
@@ -58,9 +65,19 @@ public class AddItemActivity extends BaseActivity {
             return;
         }
 
-        DatabaseReference itemsRef = db.getReference("categories/" + category);
+        if (category.equals("category")){
+            Toast.makeText(this, "Please select a category", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (period.equals("period")){
+            Toast.makeText(this, "Please select a period", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        //DatabaseReference itemsRef = db.getReference("categories/" + category);
+        DatabaseReference itemsRef = db.getReference("artifactData");
         //String id = itemsRef.push().getKey();
-        Item item = new Item(lot, "description", name, category, period, R.drawable.mew_vase);
+        Item item = new Item(lot, description, name, category, period, R.drawable.mew_vase);
 
         itemsRef.child(lotNumber).setValue(item).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
@@ -69,5 +86,8 @@ public class AddItemActivity extends BaseActivity {
                 Toast.makeText(this, "Failed to add item", Toast.LENGTH_SHORT).show();
             }
         });
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

@@ -64,15 +64,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerCategory" />
 
-    <EditText
-        android:id="@+id/editTextGenre"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:text="Name"
-        app:layout_constraintTop_toBottomOf="@+id/editTextName"
-        tools:layout_editor_absoluteX="-3dp" />
 
     <EditText
         android:id="@+id/editTextDescription"
@@ -81,7 +72,7 @@
         android:layout_marginTop="15dp"
         android:ems="10"
         android:inputType="text"
-        android:text="Name"
-        app:layout_constraintTop_toBottomOf="@+id/editTextGenre"
+        android:hint="@string/hint_description"
+        app:layout_constraintTop_toBottomOf="@+id/editTextName"
         tools:layout_editor_absoluteX="0dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

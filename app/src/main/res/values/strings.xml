@@ -12,8 +12,10 @@
 
     <string name="admin">Admin</string>
     <string name="helper">Helper</string>
-
+    <string name="hint_Category">Category</string>
+    <string name="hint_Description">Description</string>
     <string name="result">Result</string>
+    <string name="hint_Period">Period</string>
     <string name="action_sign_in">Sign In</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in_short">1234</string>

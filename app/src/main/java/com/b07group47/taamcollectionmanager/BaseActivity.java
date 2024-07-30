@@ -42,11 +42,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * Switches from the current activity with 'context' context to the 'activity' activity
      *
-     * @param context  the activity which calls the method
-     * @param activity the activity to switch to
+     * @param intent to use when switching to an activity
      */
-    protected void switchToActivity(Context context, Class<? extends AppCompatActivity> activity) {
-        startActivity(new Intent(context, activity));
+    protected void switchToActivity(Intent intent) {
+        startActivity(intent);
     }
 
     // Method used by activities which display information relevant to a particular item

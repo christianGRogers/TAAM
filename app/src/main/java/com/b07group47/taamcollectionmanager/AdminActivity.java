@@ -90,7 +90,7 @@ public class AdminActivity extends BaseActivity {
             Toast.makeText(this, "Authentication successful.", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("fromAdmin", true); // Pass the extra
-            switchToActivity(this, intent);
+            switchToActivity(intent);
         } else {
             // User is signed out, handle appropriately
         }

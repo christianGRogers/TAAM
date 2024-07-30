@@ -51,6 +51,7 @@ public class DeleteItemActivity extends BaseActivity {
 
     private void backtoMain(){
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("fromAdmin", true); // Pass the extra
         startActivity(intent);
         finish();
     }

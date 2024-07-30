@@ -62,6 +62,7 @@ public class AddItemActivity extends BaseActivity {
 
     private void backtoMain(){
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("fromAdmin", true); // Pass the extra
         startActivity(intent);
         finish();
     }

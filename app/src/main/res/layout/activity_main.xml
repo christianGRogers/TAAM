@@ -124,6 +124,19 @@
 <!--                android:layout_gravity="fill"-->
 <!--                android:gravity="center"-->
 <!--                android:text="@string/back" />-->
+        <!--    <Button-->
+        <!--        android:id="@+id/buttonReport"-->
+        <!--        android:layout_width="wrap_content"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:text="Report"-->
+        <!--        android:visibility="gone" />-->
+
+        <!--    <Button-->
+        <!--        android:id="@+id/buttonDeleteItem"-->
+        <!--        android:layout_width="wrap_content"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:text="Delete"-->
+        <!--        android:visibility="gone" />-->
 <!--        </GridLayout>-->
 
 <!--    </LinearLayout>-->
@@ -133,7 +146,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.8" />
+        app:layout_constraintGuide_end="132dp" />
 
     <ImageView
         android:id="@+id/buttonAddItem"
@@ -146,6 +159,21 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/bottomGuideline" />
+        app:layout_constraintTop_toTopOf="@+id/bottomGuideline"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/buttonReport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Report"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/bottomGuideline"
+        app:layout_constraintVertical_bias="0.809"
+        android:visibility="gone"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

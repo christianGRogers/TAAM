@@ -47,12 +47,12 @@ dependencies {
 
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
-
+    implementation(libs.firebase.firestore)
+    implementation("com.google.firebase:firebase-auth:22.0.0") // Check for the latest version
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
     implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
     implementation("com.google.firebase:firebase-analytics")
-
 }

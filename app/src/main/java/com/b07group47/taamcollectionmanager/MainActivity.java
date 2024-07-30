@@ -4,6 +4,21 @@ import static android.content.ContentValues.TAG;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+
+import java.util.HashMap;
+import java.util.Map;
+
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -25,6 +40,9 @@ public class MainActivity extends BaseActivity {
     private Button buttonReport;
     private ImageView buttonAdd;
 
+  //    private static final String TAG = "MainActivity";
+
+  
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,11 +51,33 @@ public class MainActivity extends BaseActivity {
         handleIntent();
     }
 
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // Example: Update the document with new field
+//         Map<String, Object> update = new HashMap<>();
+//         update.put("name", "your_mom");
+
+//         db.collection("test").document("BrzGwRQqes8dWASlO72S")
+//                 .update(update)
+//                 .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                     @Override
+//                     public void onSuccess(Void aVoid) {
+//                         Log.d(TAG, "DocumentSnapshot successfully updated!");
+//                     }
+//                 })
+//                 .addOnFailureListener(new OnFailureListener() {
+//                     @Override
+//                     public void onFailure(@NonNull Exception e) {
+//                         Log.w(TAG, "Error updating document", e);
+//                     }
+//                 });
+
     private void initButtons() {
         buttonReport = findViewById(R.id.buttonReport);
         buttonAdd = findViewById(R.id.buttonAddItem);
         buttonAdd.setOnClickListener(v -> switchToActivity(this, new Intent(this, AddItemActivity.class)));
     }
+
 
     @Override
     protected int getLayoutResourceId() {

@@ -94,7 +94,7 @@ public class MainActivity extends BaseActivity {
     private void insertData() {
         int insertIndex = itemList.size();
         for (int i=1; i<=6; i++){
-            itemList.add(new Item(i, "Mew Exhibition", "This is a display of the Mew Dynasty artful pottery and decor", "Mew", "100BC",  R.drawable.mew_vase));
+            itemList.add(new Item(i, "Mew Exhibition", "This is a display of the Mew Dynasty artful pottery and decor", "Mew", "100BC",  ""));
         }
         itemAdapter.notifyItemInserted(insertIndex);
     }

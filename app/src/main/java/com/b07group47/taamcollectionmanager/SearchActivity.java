@@ -71,7 +71,7 @@ public class SearchActivity extends BaseActivity {
 
         DatabaseReference itemsRef = db.getReference("categories/" + category);
         //String lot_number = itemsRef.push().getKey();
-        Item item = new Item(lot, "description", name, category, period, R.drawable.mew_vase);
+        Item item = new Item(lot, "description", name, category, period, "");
 
         itemsRef.child(lotNumber).setValue(item).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {

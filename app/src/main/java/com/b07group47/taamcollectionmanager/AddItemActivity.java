@@ -1,6 +1,5 @@
 package com.b07group47.taamcollectionmanager;
 
-import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -90,9 +89,10 @@ public class AddItemActivity extends BaseActivity {
         String category = spinnerCategory.getSelectedItem().toString().toLowerCase();
         String period = spinnerPeriod.getSelectedItem().toString().toLowerCase();
         String description = editTextDescription.getText().toString().trim();
+        String image = filePath.toString();
 
 
-        if (lotNumber.isEmpty() || name.isEmpty() || category.isEmpty() || period.isEmpty()) {
+        if (lotNumber.isEmpty() || name.isEmpty() || category.isEmpty() || period.isEmpty() || filePath==null) {
             Toast.makeText(this, "Please fill out all fields", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -114,29 +114,14 @@ public class AddItemActivity extends BaseActivity {
             return;
         }
 
-        if (filePath == null) {
-            Toast.makeText(this, "Please upload an image", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        //adding image to database
-//        ProgressDialog progressDialog = new ProgressDialog(this);
-//        progressDialog.setTitle("Uploading...");
-//        progressDialog.show();
-
 
 
         //DatabaseReference itemsRef = db.getReference("categories/" + category);
         DatabaseReference itemsRef = db.getReference("artifactData");
-
-        DatabaseReference imageRef = itemsRef.child("images/"+UUID.randomUUID().toString());
-
-        imageRef.putFile(filePath).addOnSucessListener(new OnSucessListener<UploadTask.TaskSnapshot>(){
-
-        })
+        
 
         //String id = itemsRef.push().getKey();
-        Item item = new Item(lot, description, name, category, period, R.drawable.mew_vase);
+        Item item = new Item(lot, description, name, category, period, image);
 
         itemsRef.child(lotNumber).setValue(item).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {

@@ -21,7 +21,7 @@
     <string name="action_sign_in_short">1234</string>
     <string name="prompt_email">Username</string>
     <string name="view_items">View</string>
-
+    <string name="Delete_Item">Delete Item</string>
     <string-array name="categories_array">
         <item>Books</item>
         <item>Movies</item>

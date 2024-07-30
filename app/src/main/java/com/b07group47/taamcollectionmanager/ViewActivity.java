@@ -1,9 +1,11 @@
 package com.b07group47.taamcollectionmanager;
 
+
 import static android.content.ContentValues.TAG;
 
 import android.content.Intent;
 import android.media.Image;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,11 +25,12 @@ public class ViewActivity extends BaseActivity {
     private String title, description, category, period;
     private int lot, imageID;
     private Button buttonDeleteItem;
+    private Item item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getPassedAttributes();
+        item = getPassedAttributes();
         initButtons();
         setLayoutValues();
         handleIntent();
@@ -38,20 +41,15 @@ public class ViewActivity extends BaseActivity {
         buttonDeleteItem = findViewById(R.id.buttonDeleteItem);
         buttonDeleteItem.setOnClickListener(v -> {
             Intent intent = new Intent(this, DeleteItemActivity.class);
-            intent.putExtra("LOT", this.lot);
-            switchToActivity(this, intent);
+            intent.putExtra("LOT", item.getLotNumber());
+            switchToActivity(intent);
         });
     }
 
-    private void getPassedAttributes() {
-        lot = getIntent().getIntExtra("LOT", 1);
-        title = getIntent().getStringExtra("TITLE");
-        description = getIntent().getStringExtra("DESCRIPTION");
-        category = getIntent().getStringExtra("CATEGORY");
-        period = getIntent().getStringExtra("PERIOD");
-        imageID = getIntent().getIntExtra("IMAGE", R.drawable.mew_vase);
-    }
-
+    /**
+     * Auto-fills the appropriate values in the layout based on the attributes passed in the Intent
+     * which invoked the activity and which are stores in the 'item' object
+     */
     private void setLayoutValues() {
         TextView itemLot = findViewById(R.id.itemLot);
         TextView itemTitle = findViewById(R.id.itemTitle);
@@ -60,12 +58,12 @@ public class ViewActivity extends BaseActivity {
         TextView itemPeriod = findViewById(R.id.itemPeriod);
         ImageView itemImage = findViewById(R.id.itemImage);
 
-        itemLot.setText("Lot# " + lot);
-        itemTitle.setText(title);
-        itemDescription.setText(description);
-        itemCategory.setText("Category: " + category);
-        itemPeriod.setText("Period:" + period);
-        itemImage.setImageResource(imageID);
+        itemLot.setText("Lot# " + item.getLotNumber());
+        itemTitle.setText(item.getTitle());
+        itemDescription.setText(item.getDescription());
+        itemCategory.setText("Category: " + item.getCategory());
+        itemPeriod.setText("Period:" + item.getPeriod());
+        itemImage.setImageResource(item.getImgID());
     }
 
     @Override

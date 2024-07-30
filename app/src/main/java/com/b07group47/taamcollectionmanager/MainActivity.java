@@ -26,8 +26,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.util.Log;
+import android.widget.ImageView;
 
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -40,9 +40,10 @@ public class MainActivity extends BaseActivity {
     private Button buttonReport;
     private ImageView buttonAdd;
 
-  //    private static final String TAG = "MainActivity";
-
-  
+    /**
+     * Equivalent to a constructor of the activity
+     * @param savedInstanceState the saved parameters of the activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,37 +54,22 @@ public class MainActivity extends BaseActivity {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        // Example: Update the document with new field
-//         Map<String, Object> update = new HashMap<>();
-//         update.put("name", "your_mom");
-
-//         db.collection("test").document("BrzGwRQqes8dWASlO72S")
-//                 .update(update)
-//                 .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                     @Override
-//                     public void onSuccess(Void aVoid) {
-//                         Log.d(TAG, "DocumentSnapshot successfully updated!");
-//                     }
-//                 })
-//                 .addOnFailureListener(new OnFailureListener() {
-//                     @Override
-//                     public void onFailure(@NonNull Exception e) {
-//                         Log.w(TAG, "Error updating document", e);
-//                     }
-//                 });
-
     private void initButtons() {
         buttonReport = findViewById(R.id.buttonReport);
         buttonAdd = findViewById(R.id.buttonAddItem);
-        buttonAdd.setOnClickListener(v -> switchToActivity(this, new Intent(this, AddItemActivity.class)));
+        buttonAdd.setOnClickListener(v -> switchToActivity(new Intent(this, AddItemActivity.class)));
     }
-
 
     @Override
     protected int getLayoutResourceId() {
         return R.layout.activity_main;
     }
 
+    /**
+     * Creates the table implemented as a RecyclerView in activity_main.xml
+     * Uses the ItemAdapter class to facilitate the logic of the tables
+     * Uses the TableSpacing class to facilitate the spacing between elements of the table
+     */
     private void createTable() {
         RecyclerView recyclerView = findViewById(R.id.table_layout);
         itemAdapter = new ItemAdapter(itemList, this);
@@ -93,13 +79,18 @@ public class MainActivity extends BaseActivity {
         recyclerView.addItemDecoration(new TableSpacing(spacingInPixels));
         insertData();
     }
-
+    
+    /**
+     * Populates the list of the items displayed by the table in activity_main.xml
+     */
+//      TODO: refactor to work with Firebase
     private void insertData() {
-        int insertIndex = itemList.size();
-        for (int i = 1; i <= 6; i++) {
-            itemList.add(new Item(i, "Mew Exhibition", "This is a display of the Mew Dynasty artful pottery and decor", "Mew", "100BC", R.drawable.mew_vase));
+        for (int i = 1; i <= 10; i++) {
+            itemList.add(new Item(i, "Mew Exhibition",
+                    "This is a display of the Mew Dynasty artful pottery and decor",
+                    "Mew", "100BC", R.drawable.mew_vase));
+            itemAdapter.notifyItemInserted(itemList.size());
         }
-        itemAdapter.notifyItemInserted(insertIndex);
     }
 
     private void handleIntent() {

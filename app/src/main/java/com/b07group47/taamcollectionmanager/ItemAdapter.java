@@ -9,10 +9,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * class which handles the logic of the table present on the main screen, i.e.
+ * 1. Adding a new item to the table (onCreateViewHolder)
+ * 2. Modifying the newly-added item to display specific text/properties (onBindViewHolder)
+ */
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
     private final List<Item> itemList;
     private final Context context;
@@ -22,6 +29,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         this.context = context;
     }
 
+    /**
+     * Called (before onBindViewHolder) whenever a new item is being added to the RecyclerView table
+     *
+     * @param parent   The ViewGroup into which the new View will be added after it is bound to
+     *                 an adapter position.
+     * @param viewType The view type of the new View.
+     * @return new ItemViewHolder representing an item in the table
+     */
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -29,6 +44,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         return new ItemViewHolder(view, context, itemList);
     }
 
+    /**
+     * Called whenever the ViewHolder representing an item in the table is being added to the list
+     * Modifies the attributes of the item and sets the fields to appropriate values
+     *
+     * @param holder   The ViewHolder which should be updated to represent the contents of the
+     *                 item at the given position in the data set.
+     * @param position The position of the item within the adapter's data set.
+     */
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         Item item = itemList.get(position);
@@ -40,39 +63,71 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         holder.cardImg.setImageResource(R.drawable.mew_vase);
     }
 
+    /**
+     * Returns the size of the tables
+     *
+     * @return the number of elements in the list of items which is displayed by the RecyclerView
+     */
     @Override
     public int getItemCount() {
         return itemList.size();
     }
 
+    /**
+     * class representing an item in the table, contains references to all the
+     * modifiable areas of the item such as TextViews and ImageViews as well as
+     * onClickListeners for the buttons
+     */
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
+        private final Context context;
+        private final List<Item> items;
         TextView lotNum, cardHeader, cardDesc, cardCategory, cardPeriod;
-        ImageView cardImg;
+        ImageView cardImg, reportBtn, deleteBtn;
 
+        /**
+         * Equivalent to a constructor of ItemViewHolder
+         *
+         * @param itemView the id of the xml layout that this object corresponds to
+         * @param context  the activity which contains the table (in this case always the main table)
+         * @param items    the list of items in the table (used to determine which item was clicked)
+         */
         public ItemViewHolder(@NonNull View itemView, Context context, List<Item> items) {
             super(itemView);
+            this.context = context;
+            this.items = new ArrayList<>(items);
             lotNum = itemView.findViewById(R.id.lotNum);
             cardHeader = itemView.findViewById(R.id.cardHeader);
             cardDesc = itemView.findViewById(R.id.cardDescription);
             cardCategory = itemView.findViewById(R.id.cardCategory);
             cardPeriod = itemView.findViewById(R.id.cardPeriod);
             cardImg = itemView.findViewById(R.id.cardImage);
+            reportBtn = itemView.findViewById(R.id.reportIcon);
+            deleteBtn = itemView.findViewById(R.id.deleteIcon);
 
-            itemView.setOnClickListener(v -> {
-                int pos = getAdapterPosition();
+            itemView.setOnClickListener(v -> openActivity(ViewActivity.class));
+            reportBtn.setOnClickListener(v -> openActivity(ReportActivity.class));
+            deleteBtn.setOnClickListener(v -> openActivity(DeleteItemActivity.class));
+        }
 
-                if (pos != RecyclerView.NO_POSITION) {
-                    Intent i = new Intent(context, ViewActivity.class);
-                    i.putExtra("LOT", items.get(pos).getLotNumber());
-                    i.putExtra("TITLE", items.get(pos).getTitle());
-                    i.putExtra("DESCRIPTION", items.get(pos).getDescription());
-                    i.putExtra("CATEGORY", items.get(pos).getCategory());
-                    i.putExtra("PERIOD", items.get(pos).getPeriod());
-                    i.putExtra("IMAGE", items.get(pos).getImgID());
+        /**
+         * Used to open a new activity which will receive all the attributes corresponding
+         * to the item in the table that was clicked by the user
+         *
+         * @param activity activity to open
+         */
+        private void openActivity(Class<? extends AppCompatActivity> activity) {
+            int pos = getAdapterPosition();
 
-                    context.startActivity(i);
-                }
-            });
+            if (pos != RecyclerView.NO_POSITION) {
+                Intent i = new Intent(context, activity);
+                i.putExtra("LOT", items.get(pos).getLotNumber());
+                i.putExtra("TITLE", items.get(pos).getTitle());
+                i.putExtra("DESCRIPTION", items.get(pos).getDescription());
+                i.putExtra("CATEGORY", items.get(pos).getCategory());
+                i.putExtra("PERIOD", items.get(pos).getPeriod());
+                i.putExtra("IMAGE", items.get(pos).getImgID());
+                context.startActivity(i);
+            }
         }
     }
 }

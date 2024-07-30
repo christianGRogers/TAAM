@@ -36,6 +36,7 @@
                 android:text="Generate the report by Lot number:" />
 
             <EditText
+                android:id="@+id/editTextLotNumber"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
@@ -58,6 +59,7 @@
                 android:text="Generate the report by Name:" />
 
             <EditText
+                android:id="@+id/editTextTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
@@ -80,6 +82,7 @@
                 android:text="Generate the report by Category:" />
 
             <EditText
+                android:id="@+id/editTextCategory"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
@@ -102,6 +105,7 @@
                 android:text="Generate the report by Category with description and picture only:" />
 
             <EditText
+                android:id="@+id/editTextCategoryWithDescAndImg"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
@@ -124,6 +128,7 @@
                 android:text="Generate the report by Period:" />
 
             <EditText
+                android:id="@+id/editTextPeriod"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
@@ -146,6 +151,7 @@
                 android:text="Generate the report by Period with Description and picture only:" />
 
             <EditText
+                android:id="@+id/editTextPeriodWithDescAndImg"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />

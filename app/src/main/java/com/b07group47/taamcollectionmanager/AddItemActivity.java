@@ -1,20 +1,35 @@
 package com.b07group47.taamcollectionmanager;
 
+import android.app.ProgressDialog;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 import android.content.Intent;
+
+import java.util.UUID;
+
+import androidx.annotation.Nullable;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class AddItemActivity extends BaseActivity {
+
+    private static final int req = 1000;
+
     private EditText editTextLotNumber, editTextName, editTextDescription;
     private Spinner spinnerCategory, spinnerPeriod;
+    private Button buttonAdd, buttonUpload;
+    private ImageView image;
     private FirebaseDatabase db;
+    private Uri filePath;
+
 
     @Override
     protected int getLayoutResourceId() {
@@ -28,10 +43,12 @@ public class AddItemActivity extends BaseActivity {
         editTextName = findViewById(R.id.editTextName);
         spinnerCategory = findViewById(R.id.spinnerCategory);
         spinnerPeriod = findViewById(R.id.spinnerPeriod);
-        Button buttonAdd = findViewById(R.id.buttonAdd);
+        buttonAdd = findViewById(R.id.buttonAdd);
         editTextDescription = findViewById(R.id.editTextDescription);
+        buttonUpload = findViewById(R.id.image_btn);
+        image = findViewById(R.id.imageView);
 
-        db = FirebaseDatabase.getInstance("https://b07-demo-summer-2024-default-rtdb.firebaseio.com/");
+        db = FirebaseDatabase.getInstance();
 
         // Set up the spinner with categories
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categories_array, android.R.layout.simple_spinner_item);
@@ -42,7 +59,29 @@ public class AddItemActivity extends BaseActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerPeriod.setAdapter(adapter);
 
+        //get image from gallery
+        buttonUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), req);
+            }
+        });
+
         buttonAdd.setOnClickListener(v -> addItem());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        filePath = data.getData();
+        if (resultCode == RESULT_OK && requestCode == req) {
+            image.setImageURI(filePath);
+        }
+
     }
 
     private void addItem() {
@@ -51,6 +90,7 @@ public class AddItemActivity extends BaseActivity {
         String category = spinnerCategory.getSelectedItem().toString().toLowerCase();
         String period = spinnerPeriod.getSelectedItem().toString().toLowerCase();
         String description = editTextDescription.getText().toString().trim();
+
 
         if (lotNumber.isEmpty() || name.isEmpty() || category.isEmpty() || period.isEmpty()) {
             Toast.makeText(this, "Please fill out all fields", Toast.LENGTH_SHORT).show();
@@ -74,8 +114,27 @@ public class AddItemActivity extends BaseActivity {
             return;
         }
 
+        if (filePath == null) {
+            Toast.makeText(this, "Please upload an image", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        //adding image to database
+//        ProgressDialog progressDialog = new ProgressDialog(this);
+//        progressDialog.setTitle("Uploading...");
+//        progressDialog.show();
+
+
+
         //DatabaseReference itemsRef = db.getReference("categories/" + category);
         DatabaseReference itemsRef = db.getReference("artifactData");
+
+        DatabaseReference imageRef = itemsRef.child("images/"+UUID.randomUUID().toString());
+
+        imageRef.putFile(filePath).addOnSucessListener(new OnSucessListener<UploadTask.TaskSnapshot>(){
+
+        })
+
         //String id = itemsRef.push().getKey();
         Item item = new Item(lot, description, name, category, period, R.drawable.mew_vase);
 

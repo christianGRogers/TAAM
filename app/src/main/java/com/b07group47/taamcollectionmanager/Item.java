@@ -1,5 +1,7 @@
 package com.b07group47.taamcollectionmanager;
 
+import java.util.Map;
+
 public class Item {
 
     private int lotNumber;
@@ -11,6 +13,18 @@ public class Item {
 
     public Item() {
     }
+
+    public Item(Map<String, Object> map) {
+        new Item(
+                (Integer) map.get("lot"),
+                (String) map.get("name"),
+                (String) map.get("description"),
+                (String) map.get("category"),
+                (String) map.get("period"),
+                (Integer) map.getOrDefault("image", null)
+        );
+    }
+
 
     public Item(int lot, String title, String description, String category, String period, int imgID) {
         this.lotNumber = lot;
@@ -68,5 +82,10 @@ public class Item {
 
     public void setImgID(int imgID) {
         this.imgID = imgID;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("lot %d: %s", lotNumber, title);
     }
 }

@@ -17,13 +17,14 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SearchActivity extends BaseActivity {
     private EditText editTextLotNumber, editTextName;
     private Spinner spinnerCategory, spinnerPeriod;
 
-    private FirebaseDatabase db;
-
+    private FirebaseFirestore db;
+    private FilteredSearcher search;
     @Override
     protected int getLayoutResourceId() {
         return R.layout.activity_search;
@@ -39,7 +40,7 @@ public class SearchActivity extends BaseActivity {
         spinnerPeriod = findViewById(R.id.spinnerPeriod);
         Button buttonSearch = findViewById(R.id.buttonSearch);
     
-        db = FirebaseDatabase.getInstance("https://b07-demo-summer-2024-default-rtdb.firebaseio.com/");
+        db = FirebaseFirestore.getInstance();
     
         // Set up the spinner with categories
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
@@ -48,6 +49,8 @@ public class SearchActivity extends BaseActivity {
         spinnerCategory.setAdapter(adapter);
     
         buttonSearch.setOnClickListener(v -> searchItem());
+
+        search = new FilteredSearcher();
     }
 
     private void searchItem() {
@@ -55,11 +58,6 @@ public class SearchActivity extends BaseActivity {
         String name = editTextName.getText().toString().trim();
         String category = spinnerCategory.getSelectedItem().toString().toLowerCase();
         String period = spinnerPeriod.getSelectedItem().toString().toLowerCase();
-
-        if (lotNumber.isEmpty() || name.isEmpty() || category.isEmpty() || period.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Please fill out all fields", Toast.LENGTH_SHORT).show();
-            return;
-        }
 
         int lot;
         try {
@@ -69,16 +67,7 @@ public class SearchActivity extends BaseActivity {
             return;
         }
 
-        DatabaseReference itemsRef = db.getReference("categories/" + category);
-        //String lot_number = itemsRef.push().getKey();
-        Item item = new Item(lot, "description", name, category, period, R.drawable.mew_vase);
 
-        itemsRef.child(lotNumber).setValue(item).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                Toast.makeText(getApplicationContext(), "Item added", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(getApplicationContext(), "Failed to add item", Toast.LENGTH_SHORT).show();
-            }
-        });
+
     }
 }

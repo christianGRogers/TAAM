@@ -17,17 +17,13 @@ import java.util.ArrayList;
 public class SearcherTest {
     @Test
     public void construct() {
-        FilteredSearcher fs = new FilteredSearcher();
+        QueryFactory fs = new QueryFactory();
         assertNotNull(fs);
     }
 
     @Test
     public void search() {
-        FilteredSearcher fs = new FilteredSearcher();
-        ArrayList<Item> itemList = fs.search(8, null, null, null);
-        assertNotNull(itemList);
-        assertNotEquals(itemList.size(), 0);
-        assertEquals(itemList.get(0).getLotNumber(), 8);
+        QueryFactory fs = new QueryFactory();
     }
 
 

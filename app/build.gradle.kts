@@ -51,4 +51,12 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-auth:22.0.0") // Check for the latest version
+
+    testImplementation("org.mockito:mockito-core:5.0.0")
+    testImplementation("org.mockito:mockito-inline:5.0.0")
+    testImplementation("junit:junit:4.13.2")
+
+    // Robolectric for running Android tests on the JVM
+    testImplementation("org.robolectric:robolectric:4.9.2")
+
 }

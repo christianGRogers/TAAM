@@ -21,7 +21,6 @@
     import java.util.ArrayList;
     import java.util.List;
     import java.util.Map;
-    import java.util.concurrent.atomic.AtomicBoolean;
 
     public class MainActivity extends BaseActivity {
         private final List<Item> itemList = new ArrayList<>();
@@ -32,6 +31,7 @@
         private Button buttonReport;
         private ImageView buttonAdd;
         private TextView emptyText;
+        private Button clearSearch;
 
         private ArtifactQueryFactory queryFactory;
 
@@ -57,6 +57,8 @@
             buttonAdd.setOnClickListener(v -> switchToActivity(new Intent(this, AddItemActivity.class)));
             emptyText = findViewById(R.id.emptyText);
             emptyText.setVisibility(View.VISIBLE);
+            clearSearch = findViewById(R.id.clearSearch);
+            clearSearch.setOnClickListener((v -> switchToActivity(new Intent(this, MainActivity.class))));
         }
 
         @Override
@@ -106,7 +108,6 @@
                 } else {
                     Log.d(TAG, "Error in query");
                 }
-                return;
             }).addOnFailureListener(e -> {
                 Log.d(TAG, "Error querying items", e);
             });
@@ -124,8 +125,17 @@
             } else {
                 Log.d(TAG, "AdminActivity not detected, buttons remain hidden.");
             }
+
+            // handle Search inputs. if none present, query factory handles that
+            // and just searches all input
             Bundle b = intent.getExtras();
-            if ( b == null ) return;
+
+            // if not a search
+            if ( b == null || !intent.getBooleanExtra("fromSearch", false) ) {
+                insertData(queryFactory.getAll());
+                clearSearch.setVisibility(View.INVISIBLE);
+                return;
+            }
 
             Integer lot = b.getInt("lot", -1);
             if (lot == -1) lot = null;
@@ -138,12 +148,12 @@
             Log.d(TAG, "category: "+category);
             Log.d(TAG, "period: "+period);
 
+            //only searches non-null fields
             Query searchQuery = queryFactory.getFilteredQuery(lot, name, category, period);
             if (searchQuery == null) {
                 Log.w(TAG, "searchQuery was null");
                 searchQuery = db.collection("artifactData");
             }
             insertData(searchQuery);
-
         }
     }

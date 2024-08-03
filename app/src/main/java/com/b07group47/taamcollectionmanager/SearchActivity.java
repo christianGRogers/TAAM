@@ -67,6 +67,7 @@ public class SearchActivity extends BaseActivity {
         }
         Intent i = new Intent(this, MainActivity.class);
         i.putExtras(b);
+        i.putExtra("fromSearch", true);
         startActivity(i);
         finish();
     }

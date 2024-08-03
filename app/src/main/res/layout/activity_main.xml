@@ -53,14 +53,14 @@
         android:id="@+id/table_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:padding="@dimen/screenPadding"
         android:layout_gravity="fill"
+        android:clipToPadding="false"
         android:gravity="center_horizontal"
+        android:padding="@dimen/screenPadding"
         app:layout_constraintBottom_toTopOf="@+id/bottomGuideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/titleBarContainer"
-        android:clipToPadding="false"/>
+        app:layout_constraintTop_toBottomOf="@id/titleBarContainer" />
 
 <!--        <GridLayout-->
 <!--            android:layout_width="match_parent"-->
@@ -180,11 +180,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="76dp"
-        android:text="Nothing's here..."
+        android:text="@string/empty_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/table_layout" />
+
+    <Button
+        android:id="@+id/clearSearch"
+        android:layout_width="146dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="38dp"
+        android:layout_marginBottom="48dp"
+        android:text="@string/clear_search"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/table_layout"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

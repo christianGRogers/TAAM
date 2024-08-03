@@ -11,6 +11,9 @@
     <string name="hint_period">Period</string>
     <string name="hint_description">Description</string>
 
+    <string name="empty_text">Nothing\'s here…</string>
+    <string name="clear_search">Clear Search</string>
+
     <string name="admin">Admin</string>
     <string name="helper">Helper</string>
     <string name="result">Result</string>
@@ -98,6 +101,7 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+
 
 
 </resources>

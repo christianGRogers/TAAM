@@ -50,18 +50,21 @@ public class SearchActivity extends BaseActivity {
     private void searchItem() {
         String lotNumber = editTextLotNumber.getText().toString().trim();
         String name = editTextName.getText().toString().trim();
-        String category = spinnerCategory.getSelectedItem().toString().toLowerCase();
-        String period = spinnerPeriod.getSelectedItem().toString().toLowerCase();
+        String category = spinnerCategory.getSelectedItem().toString();
+        String period = spinnerPeriod.getSelectedItem().toString();
 
         Bundle b = new Bundle(4);
-        int lot;
         if (!lotNumber.isEmpty()) {
-            lot = Integer.parseInt(lotNumber);
-            b.putInt("lot", lot);
+            b.putInt("lot", Integer.parseInt(lotNumber));
         }
-        b.putString("name", name);
-        b.putString("category", category);
-        b.putString("period", period);
+        if (!name.isEmpty())
+            b.putString("name", name);
+        if (!category.isEmpty() && !category.equals(getResources().getStringArray(R.array.categories_array)[0])) {
+            b.putString("category", category);
+        }
+        if (!period.isEmpty() && !period.equals(getResources().getStringArray(R.array.periods_array)[0])) {
+            b.putString("period", period);
+        }
         Intent i = new Intent(this, MainActivity.class);
         i.putExtras(b);
         startActivity(i);

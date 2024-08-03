@@ -7,7 +7,6 @@ import static org.junit.Assert.*;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import java.util.ArrayList;
 /**
  * Example local unit test, which will execute on the development machine (host).
  *
@@ -17,13 +16,13 @@ import java.util.ArrayList;
 public class SearcherTest {
     @Test
     public void construct() {
-        QueryFactory fs = new QueryFactory();
+        ArtifactQueryFactory fs = new ArtifactQueryFactory();
         assertNotNull(fs);
     }
 
     @Test
     public void search() {
-        QueryFactory fs = new QueryFactory();
+        ArtifactQueryFactory fs = new ArtifactQueryFactory();
     }
 
 

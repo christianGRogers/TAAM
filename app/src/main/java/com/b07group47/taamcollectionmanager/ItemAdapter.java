@@ -1,5 +1,7 @@
 package com.b07group47.taamcollectionmanager;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -106,9 +108,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
             itemView.setOnClickListener(v -> openActivity(ViewActivity.class));
             reportBtn.setOnClickListener(v -> openActivity(ReportActivity.class));
-            deleteBtn.setOnClickListener(v -> openActivity(DeleteItemActivity.class));
+            deleteBtn.setOnClickListener(v -> {
+                Intent intent = new Intent(v.getContext(), DeleteItemActivity.class);
+                int lotNumber = Integer.parseInt(lotNum.getText().toString());
+                intent.putExtra("LOT", lotNumber);
+                v.getContext().startActivity(intent);
+            });
+            //somewhere here is where it got fuckedf
         }
-
         /**
          * Used to open a new activity which will receive all the attributes corresponding
          * to the item in the table that was clicked by the user

@@ -19,7 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 public class DeleteItemActivity extends BaseActivity {
-    private int lot;
+    private long lot;
     private FirebaseFirestore db;
     private Button buttonDelete;
 
@@ -27,7 +27,7 @@ public class DeleteItemActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         db = FirebaseFirestore.getInstance();
-        getLotFromintent();
+        getLotFromIntent();
         initButtons();
     }
 
@@ -38,7 +38,7 @@ public class DeleteItemActivity extends BaseActivity {
     }
 
 
-    private void getLotFromintent(){
+    private void getLotFromIntent(){
         lot = getIntent().getIntExtra("LOT", -1);
     }
 
@@ -63,7 +63,7 @@ public class DeleteItemActivity extends BaseActivity {
             return;
         }
 
-        Query query = db.collection("artifactData").whereEqualTo("lot", this.lot);
+        Query query = ArtifactQueryFactory.getFilteredQuery(lot, null, null, null);
         query.get().addOnCompleteListener(task -> {
             if (task.isSuccessful() && !task.getResult().isEmpty()) {
                 // Assuming there is only one document with the given lot value

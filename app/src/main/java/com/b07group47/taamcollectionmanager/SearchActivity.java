@@ -55,7 +55,7 @@ public class SearchActivity extends BaseActivity {
 
         Bundle b = new Bundle(4);
         if (!lotNumber.isEmpty()) {
-            b.putInt("lot", Integer.parseInt(lotNumber));
+            b.putLong("lot", Long.parseLong(lotNumber));
         }
         if (!name.isEmpty())
             b.putString("name", name);
@@ -65,6 +65,7 @@ public class SearchActivity extends BaseActivity {
         if (!period.isEmpty() && !period.equals(getResources().getStringArray(R.array.periods_array)[0])) {
             b.putString("period", period);
         }
+
         Intent i = new Intent(this, MainActivity.class);
         i.putExtras(b);
         i.putExtra("fromSearch", true);

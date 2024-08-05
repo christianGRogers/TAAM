@@ -4,6 +4,7 @@ import static androidx.core.content.ContextCompat.startActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,15 +107,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             reportBtn = itemView.findViewById(R.id.reportIcon);
             deleteBtn = itemView.findViewById(R.id.deleteIcon);
 
+            Bundle b = new Bundle();
+
             itemView.setOnClickListener(v -> openActivity(ViewActivity.class));
             reportBtn.setOnClickListener(v -> openActivity(ReportActivity.class));
-            deleteBtn.setOnClickListener(v -> {
-                Intent intent = new Intent(v.getContext(), DeleteItemActivity.class);
-                int lotNumber = Integer.parseInt(lotNum.getText().toString());
-                intent.putExtra("LOT", lotNumber);
-                v.getContext().startActivity(intent);
-            });
-            //somewhere here is where it got fuckedf
+
+            deleteBtn.setOnClickListener(v -> openActivity(DeleteItemActivity.class));
         }
         /**
          * Used to open a new activity which will receive all the attributes corresponding

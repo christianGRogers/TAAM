@@ -24,7 +24,7 @@ public class Item {
     public Item(Map<String, Object> map) {
 
         this(
-            (long) map.get("lot"),
+            (Long) map.get("lot"),
             (String) map.get("name"),
             (String) map.get("description"),
             (String) map.get("category"),

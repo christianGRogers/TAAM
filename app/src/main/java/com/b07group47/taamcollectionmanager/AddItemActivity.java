@@ -123,9 +123,9 @@ public class AddItemActivity extends BaseActivity {
             return;
         }
 
-        int lot;
+        long lot;
         try {
-            lot = Integer.parseInt(lotNumber);
+            lot = Long.parseLong(lotNumber);
         } catch (NumberFormatException e) {
             Toast.makeText(this, "Lot number must be a number value!", Toast.LENGTH_SHORT).show();
             return;
@@ -158,8 +158,8 @@ public class AddItemActivity extends BaseActivity {
         });
     }
 
-    private void checkAndAddItem(int lot, Map<String, Object> artifact) {
-        db.collection("artifactData")
+    private void checkAndAddItem(long lot, Map<String, Object> artifact) {
+        ArtifactQueryFactory.getAll()
                 .whereEqualTo("lot", lot)
                 .get()
                 .addOnCompleteListener(task -> {
@@ -176,8 +176,8 @@ public class AddItemActivity extends BaseActivity {
                 });
     }
 
-    private void addNewItem(int lot, Map<String, Object> artifact) {
-        db.collection("artifactData")
+    private void addNewItem(long lot, Map<String, Object> artifact) {
+        ArtifactQueryFactory.getAll()
                 .add(artifact)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override

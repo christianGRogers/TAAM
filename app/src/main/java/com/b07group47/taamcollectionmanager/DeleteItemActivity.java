@@ -7,6 +7,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.storage.FirebaseStorage;
@@ -93,7 +94,14 @@ public class DeleteItemActivity extends BaseActivity {
                 String errorMessage = exception.getMessage();
                 Toast.makeText(DeleteItemActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
             }
+        }).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(DeleteItemActivity.this, "Image deleted successfully", Toast.LENGTH_SHORT).show();
+
+            }
         });
+
     }
 
 }

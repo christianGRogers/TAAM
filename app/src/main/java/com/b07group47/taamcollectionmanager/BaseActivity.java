@@ -61,7 +61,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         Item item = new Item();
 
         if (getIntent() != null) {
-            item.setLotNumber(getIntent().getIntExtra("LOT", 1));
+            item.setLotNumber(getIntent().getLongExtra("LOT", 1));
             item.setTitle(getIntent().getStringExtra("TITLE"));
             item.setDescription(getIntent().getStringExtra("DESCRIPTION"));
             item.setCategory(getIntent().getStringExtra("CATEGORY"));

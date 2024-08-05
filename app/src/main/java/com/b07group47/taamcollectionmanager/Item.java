@@ -48,7 +48,7 @@ public class Item {
         return lotNumber;
     }
 
-    public void setLotNumber(int id) {
+    public void setLotNumber(long id) {
         this.lotNumber = id;
     }
 

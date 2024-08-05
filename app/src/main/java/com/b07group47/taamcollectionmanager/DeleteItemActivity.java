@@ -63,7 +63,6 @@ public class DeleteItemActivity extends BaseActivity {
             backtoMain();
             return;
         }
-        feature/Search
         Query query = ArtifactQueryFactory.getFilteredQuery(lot, null, null, null);
 
         query.get().addOnCompleteListener(task -> {

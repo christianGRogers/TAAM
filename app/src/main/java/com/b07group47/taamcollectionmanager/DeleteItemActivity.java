@@ -15,7 +15,7 @@ import com.google.firebase.storage.StorageException;
 import com.google.firebase.storage.StorageReference;
 
 public class DeleteItemActivity extends BaseActivity {
-    private int lot;
+    private long lot;
     private FirebaseFirestore db;
     private FirebaseStorage firebaseStorage;
     private StorageReference storageRef, imageRef;
@@ -25,9 +25,10 @@ public class DeleteItemActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         db = FirebaseFirestore.getInstance();
+        getLotFromIntent();
         firebaseStorage = FirebaseStorage.getInstance();
         storageRef = firebaseStorage.getReference();
-        getLotFromintent();
+
         initButtons();
     }
 
@@ -38,7 +39,7 @@ public class DeleteItemActivity extends BaseActivity {
     }
 
 
-    private void getLotFromintent(){
+    private void getLotFromIntent(){
         lot = getIntent().getIntExtra("LOT", -1);
     }
 
@@ -62,9 +63,9 @@ public class DeleteItemActivity extends BaseActivity {
             backtoMain();
             return;
         }
+        feature/Search
+        Query query = ArtifactQueryFactory.getFilteredQuery(lot, null, null, null);
 
-
-        Query query = db.collection("artifactData").whereEqualTo("lot", this.lot);
         query.get().addOnCompleteListener(task -> {
             if (task.isSuccessful() && !task.getResult().isEmpty()) {
                 // Assuming there is only one document with the given lot value

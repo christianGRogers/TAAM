@@ -1,44 +1,37 @@
 package com.b07group47.taamcollectionmanager;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.util.Log;
-import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends BaseActivity {
     private final List<Item> itemList = new ArrayList<>();
+
+    private final String TAG = "MainActivity";
+
     private ItemAdapter itemAdapter;
     private Button buttonReport;
     private ImageView buttonAdd;
+    private TextView emptyText;
+    private Button clearSearch;
 
     /**
      * Equivalent to a constructor of the activity
@@ -50,14 +43,17 @@ public class MainActivity extends BaseActivity {
         initButtons();
         createTable();
         handleIntent();
+        Log.d(TAG, "mainactivity created.");
     }
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private void initButtons() {
         buttonReport = findViewById(R.id.buttonReport);
         buttonAdd = findViewById(R.id.buttonAddItem);
         buttonAdd.setOnClickListener(v -> switchToActivity(new Intent(this, AddItemActivity.class)));
+        emptyText = findViewById(R.id.emptyText);
+        emptyText.setVisibility(View.VISIBLE);
+        clearSearch = findViewById(R.id.clearSearch);
+        clearSearch.setOnClickListener((v -> switchToActivity(new Intent(this, MainActivity.class))));
     }
 
     @Override
@@ -77,20 +73,37 @@ public class MainActivity extends BaseActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.recycler_view_item_spacing);
         recyclerView.addItemDecoration(new TableSpacing(spacingInPixels));
-        insertData();
     }
-    
+
     /**
      * Populates the list of the items displayed by the table in activity_main.xml
      */
-//      TODO: refactor to work with Firebase
-    private void insertData() {
-        for (int i = 1; i <= 10; i++) {
-            itemList.add(new Item(i, "Mew Exhibition",
-                    "This is a display of the Mew Dynasty artful pottery and decor",
-                    "Mew", "100BC", R.drawable.mew_vase));
-            itemAdapter.notifyItemInserted(itemList.size());
-        }
+    private void insertData(Query query) {
+        query.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                QuerySnapshot qs = task.getResult();
+                if ( qs.isEmpty()) {
+                    Log.d(TAG, "Empty query results.");
+                }
+                for (DocumentSnapshot d : qs.getDocuments()) {
+                    Map<String, Object> data = d.getData();
+                    if (data != null) {
+                        Item i = new Item(data);
+                        int position = itemList.size();
+                        itemList.add(i);
+                        itemAdapter.notifyItemInserted(position);
+                        Log.d(TAG, "Item inserted: " + i);
+                        emptyText.setVisibility(View.INVISIBLE);
+                    } else {
+                        Log.d(TAG, "Document data is null");
+                    }
+                }
+            } else {
+                Log.d(TAG, "Error in query");
+            }
+        }).addOnFailureListener(e -> {
+            Log.d(TAG, "Error querying items", e);
+        });
     }
 
     private void handleIntent() {
@@ -102,9 +115,38 @@ public class MainActivity extends BaseActivity {
             Log.d(TAG, "AdminActivity detected, showing buttons.");
             buttonReport.setVisibility(View.VISIBLE);
             buttonAdd.setVisibility(View.VISIBLE);
-            //buttonDelete.setVisibility(View.VISIBLE);
         } else {
             Log.d(TAG, "AdminActivity not detected, buttons remain hidden.");
         }
+
+        // handle Search inputs. if none present, query factory handles that
+        // and just searches all input
+        Bundle b = intent.getExtras();
+
+        // if not a search
+        if ( b == null || !intent.getBooleanExtra("fromSearch", false) ) {
+            insertData(ArtifactQueryFactory.getAll());
+            clearSearch.setVisibility(View.INVISIBLE);
+            return;
+        }
+
+        Long lot = b.getLong("lot", -1);
+        if (lot == -1) lot = null;
+        String name = b.getString("name", null);
+        String category = b.getString("category", null);
+        String period = b.getString("period", null);
+
+        Log.d(TAG, "lot: "+lot);
+        Log.d(TAG, "name: "+name);
+        Log.d(TAG, "category: "+category);
+        Log.d(TAG, "period: "+period);
+
+        //only searches non-null fields
+        Query searchQuery = ArtifactQueryFactory.getFilteredQuery(lot, name, category, period);
+        if (searchQuery == null) {
+            Log.w(TAG, "searchQuery was null");
+            return;
+        }
+        insertData(searchQuery);
     }
 }

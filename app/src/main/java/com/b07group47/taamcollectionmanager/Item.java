@@ -1,8 +1,17 @@
 package com.b07group47.taamcollectionmanager;
 
+import android.annotation.SuppressLint;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
+import java.util.Map;
+
 public class Item {
 
-    private int lotNumber;
+    private final String TAG = "Item.java";
+
+    private long lotNumber;
     private String title;
     private String category;
     private String period;
@@ -12,7 +21,20 @@ public class Item {
     public Item() {
     }
 
-    public Item(int lot, String title, String description, String category, String period, int imgID) {
+    public Item(Map<String, Object> map) {
+
+        this(
+            (Long) map.get("lot"),
+            (String) map.get("name"),
+            (String) map.get("description"),
+            (String) map.get("category"),
+            (String) map.get("period"),
+           0
+        );
+
+    }
+
+    public Item(long lot, String title, String description, String category, String period, int imgID) {
         this.lotNumber = lot;
         this.title = title;
         this.description = description;
@@ -22,7 +44,7 @@ public class Item {
     }
 
     // Getters and setters
-    public int getLotNumber() {
+    public long getLotNumber() {
         return lotNumber;
     }
 
@@ -68,5 +90,12 @@ public class Item {
 
     public void setImgID(int imgID) {
         this.imgID = imgID;
+    }
+
+    @NonNull
+    @SuppressLint("DefaultLocale")
+    @Override
+    public String toString() {
+        return String.format("lot %d: %s", lotNumber, title);
     }
 }

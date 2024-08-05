@@ -25,7 +25,7 @@ public class ReportActivity extends BaseActivity {
         EditText editPeriod = findViewById(R.id.editTextPeriod);
         EditText editPeriodWithDescAndImg = findViewById(R.id.editTextPeriodWithDescAndImg);
 
-        editLot.setText("" + item.getLotNumber());
+        editLot.setText(String.format("%d", item.getLotNumber()));
         editTitle.setText(item.getTitle());
         editCategory.setText(item.getCategory());
         editCategoryWithDescAndImg.setText(item.getCategory());

@@ -1,7 +1,10 @@
 package com.b07group47.taamcollectionmanager;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,11 +107,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             reportBtn = itemView.findViewById(R.id.reportIcon);
             deleteBtn = itemView.findViewById(R.id.deleteIcon);
 
+            Bundle b = new Bundle();
+
             itemView.setOnClickListener(v -> openActivity(ViewActivity.class));
             reportBtn.setOnClickListener(v -> openActivity(ReportActivity.class));
+
             deleteBtn.setOnClickListener(v -> openActivity(DeleteItemActivity.class));
         }
-
         /**
          * Used to open a new activity which will receive all the attributes corresponding
          * to the item in the table that was clicked by the user

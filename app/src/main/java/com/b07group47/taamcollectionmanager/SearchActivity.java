@@ -1,7 +1,6 @@
 package com.b07group47.taamcollectionmanager;
 
-import static java.security.AccessController.getContext;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -9,20 +8,17 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.model.mutation.ArrayTransformOperation;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class SearchActivity extends BaseActivity {
     private EditText editTextLotNumber, editTextName;
     private Spinner spinnerCategory, spinnerPeriod;
 
-    private FirebaseDatabase db;
 
     @Override
     protected int getLayoutResourceId() {
@@ -38,14 +34,15 @@ public class SearchActivity extends BaseActivity {
         spinnerCategory = findViewById(R.id.spinnerCategory);
         spinnerPeriod = findViewById(R.id.spinnerPeriod);
         Button buttonSearch = findViewById(R.id.buttonSearch);
-    
-        db = FirebaseDatabase.getInstance("https://b07-demo-summer-2024-default-rtdb.firebaseio.com/");
-    
+
         // Set up the spinner with categories
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-                R.array.categories_array, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categories_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategory.setAdapter(adapter);
+
+        adapter = ArrayAdapter.createFromResource(this, R.array.periods_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerPeriod.setAdapter(adapter);
     
         buttonSearch.setOnClickListener(v -> searchItem());
     }
@@ -53,32 +50,26 @@ public class SearchActivity extends BaseActivity {
     private void searchItem() {
         String lotNumber = editTextLotNumber.getText().toString().trim();
         String name = editTextName.getText().toString().trim();
-        String category = spinnerCategory.getSelectedItem().toString().toLowerCase();
-        String period = spinnerPeriod.getSelectedItem().toString().toLowerCase();
+        String category = spinnerCategory.getSelectedItem().toString();
+        String period = spinnerPeriod.getSelectedItem().toString();
 
-        if (lotNumber.isEmpty() || name.isEmpty() || category.isEmpty() || period.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Please fill out all fields", Toast.LENGTH_SHORT).show();
-            return;
+        Bundle b = new Bundle(4);
+        if (!lotNumber.isEmpty()) {
+            b.putLong("lot", Long.parseLong(lotNumber));
+        }
+        if (!name.isEmpty())
+            b.putString("name", name);
+        if (!category.isEmpty() && !category.equals(getResources().getStringArray(R.array.categories_array)[0])) {
+            b.putString("category", category);
+        }
+        if (!period.isEmpty() && !period.equals(getResources().getStringArray(R.array.periods_array)[0])) {
+            b.putString("period", period);
         }
 
-        int lot;
-        try {
-            lot = Integer.parseInt(lotNumber);
-        } catch (NumberFormatException e) {
-            Toast.makeText(this, "Lot number must be a number value!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        DatabaseReference itemsRef = db.getReference("categories/" + category);
-        //String lot_number = itemsRef.push().getKey();
-        Item item = new Item(lot, "description", name, category, period, R.drawable.mew_vase);
-
-        itemsRef.child(lotNumber).setValue(item).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                Toast.makeText(getApplicationContext(), "Item added", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(getApplicationContext(), "Failed to add item", Toast.LENGTH_SHORT).show();
-            }
-        });
+        Intent i = new Intent(this, MainActivity.class);
+        i.putExtras(b);
+        i.putExtra("fromSearch", true);
+        startActivity(i);
+        finish();
     }
 }

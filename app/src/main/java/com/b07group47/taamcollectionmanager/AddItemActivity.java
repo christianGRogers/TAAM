@@ -36,7 +36,7 @@ public class AddItemActivity extends BaseActivity {
     private ImageView image;
     private Spinner spinnerCategory, spinnerPeriod;
     private FirebaseFirestore db;
-    private Uri filePath = Uri.EMPTY;
+    private Uri filePath = Uri.EMPTY, downloadUri = Uri.EMPTY;
     private FirebaseStorage firebaseStorage;
     private StorageReference imageRef;
 
@@ -95,6 +95,7 @@ public class AddItemActivity extends BaseActivity {
 
     private void initAnswers(){
         editTextLotNumber = findViewById(R.id.editTextLotNumber);
+
         editTextName = findViewById(R.id.editTextName);
         editTextDescription = findViewById(R.id.editTextDescription);
         spinnerCategory = findViewById(R.id.spinnerCategory);
@@ -111,6 +112,7 @@ public class AddItemActivity extends BaseActivity {
 
     private void addItem() {
         String lotNumber = editTextLotNumber.getText().toString().trim();
+        uploadImage(lotNumber);
         String name = editTextName.getText().toString().trim();
         String category = spinnerCategory.getSelectedItem().toString().trim();
         String description = editTextDescription.getText().toString().trim();
@@ -130,7 +132,6 @@ public class AddItemActivity extends BaseActivity {
             Toast.makeText(this, "Lot number must be a number value!", Toast.LENGTH_SHORT).show();
             return;
         }
-        uploadImage(lotNumber);
         Map<String, Object> artifact = new HashMap<>();
         artifact.put("image", image);
         artifact.put("category", category);
@@ -141,21 +142,9 @@ public class AddItemActivity extends BaseActivity {
         checkAndAddItem(lot, artifact);
     }
 
-    private void uploadImage(String lotNumber){
-        imageRef = firebaseStorage.getReference().child("images/" + lotNumber);
-
+    private void uploadImage(String lotNumber) {
+        imageRef = firebaseStorage.getReference().child("images/" + lotNumber+".jpg");
         UploadTask uploadTask = imageRef.putFile(filePath);
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                //TODO
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-           @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                //TODO
-            }
-        });
     }
 
     private void checkAndAddItem(int lot, Map<String, Object> artifact) {

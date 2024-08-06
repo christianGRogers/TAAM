@@ -40,7 +40,7 @@ public class DeleteItemActivity extends BaseActivity {
 
 
     private void getLotFromIntent(){
-        lot = getIntent().getIntExtra("LOT", -1);
+        lot = getIntent().getLongExtra("LOT", -1);
     }
 
 

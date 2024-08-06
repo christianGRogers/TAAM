@@ -20,13 +20,13 @@ public class PDFGenerator {
         Log.d(TAG, "generateReport: Starting PDF generation for report titled: " + reportTitle);
 
         //ImageDownloader imageDownloader = new ImageDownloader();
-        //PDFDocument pdfDocument = new PDFDocument(imageDownloader);
+        PDFDocument pdfDocument = new PDFDocument(imageDownloader);
 
         Log.d(TAG, "generateReport: Generating PDF bytes for items");
-        //byte[] pdfBytes = pdfDocument.generatePdf(items);
+        byte[] pdfBytes = pdfDocument.generatePdf(items);
 
         Log.d(TAG, "generateReport: Saving PDF to storage");
-        //File pdfFile = savePdfToStorage(context, pdfBytes, reportTitle);
+        File pdfFile = savePdfToStorage(context, pdfBytes, reportTitle);
     }
 
     private static File savePdfToStorage(Context context, byte[] pdfBytes, String reportTitle) {

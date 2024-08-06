@@ -11,9 +11,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class AdminActivity extends BaseActivity {
-    private EditText Email, Password;
-    private Button buttonLogin;
-    private FirebaseAuth mAuth;
+    EditText Email, Password;
+    Button buttonLogin;
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +60,7 @@ public class AdminActivity extends BaseActivity {
         return R.layout.activity_admin;
     }
 
-    private void saveValue() {
+    protected void saveValue() {
         String user_email = Email.getText().toString().trim();
         String user_password = Password.getText().toString().trim();
 
@@ -84,7 +84,7 @@ public class AdminActivity extends BaseActivity {
                 });
     }
 
-    private void updateUI(FirebaseUser user) {
+    protected void updateUI(FirebaseUser user) {
         if (user != null) {
             // User is signed in, navigate to the main activity or whatever is appropriate
             Toast.makeText(this, "Authentication successful.", Toast.LENGTH_SHORT).show();

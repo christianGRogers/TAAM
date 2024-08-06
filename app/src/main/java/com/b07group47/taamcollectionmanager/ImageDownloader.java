@@ -21,7 +21,7 @@ public class ImageDownloader {
     private static final String TAG = "ImageDownloader";
     private static final long ONE_MEGABYTE = 1024 * 1024;
     private static final int NUMBER_OF_THREADS = 12;
-    private static final long DOWNLOAD_TIMEOUT = 30; // seconds
+    private static final long DOWNLOAD_TIMEOUT = 30;
 
     private final ExecutorService executorService;
     private final FirebaseStorage storage;

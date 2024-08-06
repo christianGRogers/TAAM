@@ -19,7 +19,7 @@ public class PDFGenerator {
     public static void generateReport(Context context, List<Item> items, String reportTitle) {
         Log.d(TAG, "generateReport: Starting PDF generation for report titled: " + reportTitle);
 
-        //ImageDownloader imageDownloader = new ImageDownloader();
+        ImageDownloader imageDownloader = new ImageDownloader();
         PDFDocument pdfDocument = new PDFDocument(imageDownloader);
 
         Log.d(TAG, "generateReport: Generating PDF bytes for items");
@@ -27,6 +27,11 @@ public class PDFGenerator {
 
         Log.d(TAG, "generateReport: Saving PDF to storage");
         File pdfFile = savePdfToStorage(context, pdfBytes, reportTitle);
+
+        if (pdfFile != null) {
+            Log.d(TAG, "generateReport: Opening PDF");
+            openPdf(context, pdfFile);
+        }
     }
 
     private static File savePdfToStorage(Context context, byte[] pdfBytes, String reportTitle) {
@@ -48,6 +53,20 @@ public class PDFGenerator {
         } catch (IOException e) {
             Log.e(TAG, "savePdfToStorage: Error saving PDF", e);
             return null;
+        }
+    }
+
+    private static void openPdf(Context context, File pdfFile) {
+        Uri pdfUri = FileProvider.getUriForFile(context, context.getPackageName() + ".provider", pdfFile);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(pdfUri, "application/pdf");
+        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+
+        try {
+            context.startActivity(intent);
+        } catch (Exception e) {
+            Log.e(TAG, "openPdf: Error opening PDF", e);
         }
     }
 }

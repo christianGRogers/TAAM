@@ -80,6 +80,7 @@ class TableHeaderEventHandler implements IEventHandler {
         return tableHeight;
     }
 
+
     private void initTable(String documentTitle) throws MalformedURLException {
         table = new Table(new float[]{320F, 200F});
         table.useAllAvailableWidth();
@@ -90,14 +91,14 @@ class TableHeaderEventHandler implements IEventHandler {
         table.addCell(title);
         table.setMarginBottom(20);
 
-
-        ImageData data = ImageDataFactory.create("");
-        Image img = new Image(data);
-        img.setWidth(200);
-        Cell logo = new Cell();
-        logo.setBorder(Border.NO_BORDER);
-        logo.add(img);
-        table.addCell(logo);
+        // FIX LATER
+        //ImageData data = ImageDataFactory.create("res/drawable/logo.png");
+        //Image img = new Image(data);
+        //img.setWidth(200);
+        //Cell logo = new Cell();
+        //logo.setBorder(Border.NO_BORDER);
+        //logo.add(img);
+        //table.addCell(logo);
 
         Log.d(TAG, "Initialized table with title and logo.");
     }

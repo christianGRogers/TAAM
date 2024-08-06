@@ -1,30 +1,22 @@
 package com.b07group47.taamcollectionmanager;
 
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Intent;
-import android.media.Image;
-
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.auth.GetTokenResult;
 
 public class ViewActivity extends BaseActivity {
     private FirebaseDatabase db;
     private DatabaseReference itemsRef;
     private String title, description, category, period;
     private int lot, imageID;
-    private Button buttonDeleteItem;
+    private Button buttonDeleteItem, buttonReportItem;
     private Item item;
 
     @Override
@@ -42,6 +34,17 @@ public class ViewActivity extends BaseActivity {
         buttonDeleteItem.setOnClickListener(v -> {
             Intent intent = new Intent(this, DeleteItemActivity.class);
             intent.putExtra("LOT", item.getLotNumber());
+            switchToActivity(intent);
+        });
+
+        buttonReportItem = findViewById(R.id.buttonReportItem);
+        buttonReportItem.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ReportActivity.class);
+            intent.putExtra("LOT", item.getLotNumber());
+            intent.putExtra("TITLE", item.getTitle());
+            intent.putExtra("DESCRIPTION", item.getDescription());
+            intent.putExtra("CATEGORY", item.getCategory());
+            intent.putExtra("PERIOD", item.getPeriod());
             switchToActivity(intent);
         });
     }
@@ -62,7 +65,7 @@ public class ViewActivity extends BaseActivity {
         itemTitle.setText(item.getTitle());
         itemDescription.setText(item.getDescription());
         itemCategory.setText("Category: " + item.getCategory());
-        itemPeriod.setText("Period:" + item.getPeriod());
+        itemPeriod.setText("Period: " + item.getPeriod());
         itemImage.setImageResource(item.getImgID());
     }
 

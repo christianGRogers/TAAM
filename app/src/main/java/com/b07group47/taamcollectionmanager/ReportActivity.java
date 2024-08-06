@@ -164,7 +164,7 @@ public class ReportActivity extends BaseActivity {
             if (task.isSuccessful()) {
                 List<Item> items = new ArrayList<>();
                 for (QueryDocumentSnapshot document : task.getResult()) {
-                    Item item = document.toObject(Item.class);
+                    Item item = new Item(document.getData());
                     if (descPicOnly) {
                         item = new Item(item.getLotNumber(), item.getDescription(), "", "", "", item.getImgID());
                     }

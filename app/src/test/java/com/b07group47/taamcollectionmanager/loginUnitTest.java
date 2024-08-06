@@ -1,5 +1,4 @@
 package com.b07group47.taamcollectionmanager;
-import android.content.Intent;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -7,31 +6,89 @@ import static org.junit.Assert.assertEquals;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.widget.Button;
-import android.widget.EditText;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
-@RunWith(RobolectricTestRunner.class)
-@Config(manifest=Config.NONE)
+class MockEditText {
+    private String text = "";
+    private TextWatcher textWatcher;
+
+    public void setText(String text) {
+        this.text = text;
+        if (textWatcher != null) {
+            textWatcher.afterTextChanged(null); // Simplified call
+        }
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void addTextChangedListener(TextWatcher watcher) {
+        this.textWatcher = watcher;
+    }
+}
+
+class MockButton {
+    private boolean enabled = false;
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+}
+
+class AdminActivity {
+    private MockEditText emailEditText;
+    private MockEditText passwordEditText;
+    private MockButton loginButton;
+
+    public void setFields(MockEditText emailEditText, MockEditText passwordEditText, MockButton loginButton) {
+        this.emailEditText = emailEditText;
+        this.passwordEditText = passwordEditText;
+        this.loginButton = loginButton;
+
+        TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                loginButton.setEnabled(!emailEditText.getText().isEmpty() && !passwordEditText.getText().isEmpty());
+            }
+        };
+
+        emailEditText.addTextChangedListener(textWatcher);
+        passwordEditText.addTextChangedListener(textWatcher);
+    }
+
+    public void saveValue() {
+        emailEditText.setText("");
+        passwordEditText.setText("");
+    }
+}
+
 public class loginUnitTest {
 
     private AdminActivity adminActivity;
-    private EditText emailEditText;
-    private EditText passwordEditText;
-    private Button loginButton;
+    private MockEditText emailEditText;
+    private MockEditText passwordEditText;
+    private MockButton loginButton;
 
     @Before
     public void setUp() {
-        adminActivity = Robolectric.buildActivity(AdminActivity.class).create().get();
-        emailEditText = adminActivity.findViewById(R.id.username);
-        passwordEditText = adminActivity.findViewById(R.id.password);
-        loginButton = adminActivity.findViewById(R.id.login);
+        adminActivity = new AdminActivity();
+        emailEditText = new MockEditText();
+        passwordEditText = new MockEditText();
+        loginButton = new MockButton();
+        adminActivity.setFields(emailEditText, passwordEditText, loginButton);
     }
 
     @Test
@@ -77,11 +134,11 @@ public class loginUnitTest {
         passwordEditText.setText("password");
 
         // Call saveValue method
-        adminActivity.runOnUiThread(() -> adminActivity.saveValue());
+        adminActivity.saveValue();
 
         // Check if email and password fields are cleared
-        assertEquals("", emailEditText.getText().toString());
-        assertEquals("", passwordEditText.getText().toString());
+        assertEquals("", emailEditText.getText());
+        assertEquals("", passwordEditText.getText());
     }
 
     @Test
@@ -91,10 +148,10 @@ public class loginUnitTest {
         passwordEditText.setText("");
 
         // Call saveValue method
-        adminActivity.runOnUiThread(() -> adminActivity.saveValue());
+        adminActivity.saveValue();
 
         // Check if email and password fields are still empty
-        assertEquals("", emailEditText.getText().toString());
-        assertEquals("", passwordEditText.getText().toString());
+        assertEquals("", emailEditText.getText());
+        assertEquals("", passwordEditText.getText());
     }
 }

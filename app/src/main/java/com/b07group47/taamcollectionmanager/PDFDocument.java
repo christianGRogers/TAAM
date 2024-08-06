@@ -157,7 +157,7 @@ public class PDFDocument {
     }
 
     private void insertIfNotNull(String displayName, Object value, Table table, AtomicInteger rowCounter) {
-        if (value != null) {
+        if (value != null && !String.valueOf(value).isBlank()) {
             Log.d(TAG, "Inserting field with display name: " + displayName);
             Color color = (rowCounter.getAndIncrement() % 2 == 0) ? GRAY : WHITE;
 

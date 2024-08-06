@@ -3,7 +3,6 @@ package com.b07group47.taamcollectionmanager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,14 +12,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 public class ViewActivity extends BaseActivity {
-    private Button buttonDeleteItem;
+    private Button buttonDeleteItem, buttonReportItem;
     private Item item;
 
     @Override
@@ -40,6 +38,17 @@ public class ViewActivity extends BaseActivity {
             intent.putExtra("LOT", item.getLotNumber());
             switchToActivity(intent);
         });
+
+        buttonReportItem = findViewById(R.id.buttonReportItem);
+        buttonReportItem.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ReportActivity.class);
+            intent.putExtra("LOT", item.getLotNumber());
+            intent.putExtra("TITLE", item.getTitle());
+            intent.putExtra("DESCRIPTION", item.getDescription());
+            intent.putExtra("CATEGORY", item.getCategory());
+            intent.putExtra("PERIOD", item.getPeriod());
+            switchToActivity(intent);
+        });
     }
 
     /**
@@ -57,7 +66,7 @@ public class ViewActivity extends BaseActivity {
         itemTitle.setText(item.getTitle());
         itemDescription.setText(item.getDescription());
         itemCategory.setText("Category: " + item.getCategory());
-        itemPeriod.setText("Period:" + item.getPeriod());
+        itemPeriod.setText("Period: " + item.getPeriod());
     }
 
     private void setImage(int lot){

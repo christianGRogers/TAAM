@@ -64,6 +64,12 @@
                 android:textSize="16sp" />
         </LinearLayout>
 
+        <Button
+            android:id="@+id/logout"
+            android:layout_width="102dp"
+            android:layout_height="wrap_content"
+            android:text="logout" />
+
     </LinearLayout>
 
 

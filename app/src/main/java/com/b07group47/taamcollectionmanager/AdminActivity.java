@@ -12,7 +12,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class AdminActivity extends BaseActivity {
     private EditText Email, Password;
-    private Button buttonLogin;
+    private Button buttonLogin, buttonLogout;
     private FirebaseAuth mAuth;
 
     @Override
@@ -21,6 +21,7 @@ public class AdminActivity extends BaseActivity {
         setContentView(R.layout.activity_admin); // Make sure to set the content view
         mAuth = FirebaseAuth.getInstance();
         buttonLogin = findViewById(R.id.login);
+        buttonLogout = findViewById(R.id.logout);
         Email = findViewById(R.id.username);
         Password = findViewById(R.id.password);
 
@@ -52,6 +53,13 @@ public class AdminActivity extends BaseActivity {
             saveValue();
             Email.setText(""); // Clear the email field
             Password.setText(""); // Clear the password field
+        });
+
+        buttonLogout.setOnClickListener(v -> {
+            Toast.makeText(this, "Logout successful.", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("fromAdmin", false); // Pass the extra
+            switchToActivity(intent);
         });
     }
 

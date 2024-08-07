@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -42,6 +43,34 @@ public class TitleBarFragment extends Fragment {
         adminButton.setOnClickListener(v -> startActivity(new Intent(getContext(), AdminActivity.class)));
         searchButton.setOnClickListener(v -> startActivity(new Intent(getContext(), SearchActivity.class)));
 
+        if (currentScreen == null)
+            return view;
+
+        if (currentScreen.contentEquals("MAIN_SCREEN")) {
+            if (UserState.isAdmin()) {
+//                Custom back button which logs the user out
+                backButton.setOnClickListener(v -> {
+                    if (getActivity() == null) {
+                        return;
+                    }
+
+                    UserState.setIsAdmin(false);
+                    startActivity(new Intent(getContext(), MainActivity.class));
+                    Toast.makeText(getContext(), "Logout successful", Toast.LENGTH_SHORT).show();
+                });
+
+                return view;
+            }
+            else {
+                backButton.setVisibility(View.INVISIBLE);
+            }
+        } else if (currentScreen.contentEquals("ADMIN_SCREEN")) {
+            searchButton.setVisibility(View.INVISIBLE);
+            adminButton.setVisibility(View.INVISIBLE);
+        } else if (currentScreen.contentEquals("SEARCH_SCREEN")) {
+            searchButton.setVisibility(View.INVISIBLE);
+        }
+
         backButton.setOnClickListener(v -> {
             if (getActivity() == null) {
                 return;
@@ -49,18 +78,6 @@ public class TitleBarFragment extends Fragment {
 
             getActivity().onBackPressed();
         });
-
-        if (currentScreen == null)
-            return view;
-
-        if (currentScreen.contentEquals("MAIN_SCREEN")) {
-            backButton.setVisibility(View.INVISIBLE);
-        } else if (currentScreen.contentEquals("ADMIN_SCREEN")) {
-            searchButton.setVisibility(View.INVISIBLE);
-            adminButton.setVisibility(View.INVISIBLE);
-        } else if (currentScreen.contentEquals("SEARCH_SCREEN")) {
-            searchButton.setVisibility(View.INVISIBLE);
-        }
 
         return view;
     }

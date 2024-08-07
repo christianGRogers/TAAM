@@ -10,9 +10,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.Spinner;
 import android.widget.Toast;
 import android.view.View;
+import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 
@@ -25,6 +27,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.UploadTask;
 
+import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,11 +37,14 @@ public class AddItemActivity extends BaseActivity {
     private EditText editTextLotNumber, editTextName, editTextDescription;
     private Button buttonAdd, buttonUpload;
     private ImageView image;
+    private VideoView videoView;
+    private MediaController mediaController;
     private Spinner spinnerCategory, spinnerPeriod;
     private FirebaseFirestore db;
     private Uri filePath = Uri.EMPTY, downloadUri = Uri.EMPTY;
     private FirebaseStorage firebaseStorage;
     private StorageReference imageRef;
+    private String i;
 
     @Override
     protected int getLayoutResourceId() {
@@ -52,11 +58,11 @@ public class AddItemActivity extends BaseActivity {
         initButtons();
         db = FirebaseFirestore.getInstance();
         firebaseStorage = FirebaseStorage.getInstance();
+        mediaController = new MediaController(this);
         // Set up the spinner with categories
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categories_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategory.setAdapter(adapter);
-
         adapter = ArrayAdapter.createFromResource(this, R.array.periods_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerPeriod.setAdapter(adapter);
@@ -67,9 +73,23 @@ public class AddItemActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
         //image reference is saved to filePath as a URI
-        filePath = data.getData();
-        if (resultCode == RESULT_OK && requestCode == req) {
-            image.setImageURI(filePath);
+        if (resultCode == RESULT_OK && requestCode == req && data != null) {
+            filePath = data.getData();
+            String mimetype = getContentResolver().getType(filePath);
+            i = mimetype;
+            if (mimetype.equals("image/jpeg")){
+                image.setImageURI(filePath);
+            }
+            else{
+                image.setVisibility(View.INVISIBLE);
+                videoView.setVisibility(View.VISIBLE);
+                mediaController.setAnchorView(videoView);
+                mediaController.setMediaPlayer(videoView);
+                videoView.setMediaController(mediaController);
+                videoView.setVideoURI(Uri.parse(filePath.toString()));
+                videoView.start();
+            }
+
         }
 
     }
@@ -85,22 +105,23 @@ public class AddItemActivity extends BaseActivity {
             @Override
             public void onClick(View v){
                 Intent intent = new Intent();
-                intent.setType("image/*");
+                String[] mimetypes = {"image/*", "video/*"};
+                intent.setType("*/*");
+                intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), req);
+                startActivityForResult(Intent.createChooser(intent, "Select Image or Video"), req);
             }
         });
     }
 
     private void initAnswers(){
         editTextLotNumber = findViewById(R.id.editTextLotNumber);
-
         editTextName = findViewById(R.id.editTextName);
         editTextDescription = findViewById(R.id.editTextDescription);
         spinnerCategory = findViewById(R.id.spinnerCategory);
         spinnerPeriod = findViewById(R.id.spinnerPeriod);
         image = findViewById(R.id.imageView);
+        videoView = findViewById(R.id.videoView);
     }
 
     private void backtoMain(){
@@ -118,8 +139,6 @@ public class AddItemActivity extends BaseActivity {
         String description = editTextDescription.getText().toString().trim();
         String period = spinnerPeriod.getSelectedItem().toString().trim();
 
-        String image = "test/test"; //change this later this is just for now
-
         if (lotNumber.isEmpty() || name.isEmpty() || category.equals("Category") || period.equals("Period") || description.isEmpty() || Uri.EMPTY.equals(filePath)) {
             Toast.makeText(this, "Please fill out all fields", Toast.LENGTH_SHORT).show();
             return;
@@ -133,7 +152,7 @@ public class AddItemActivity extends BaseActivity {
             return;
         }
         Map<String, Object> artifact = new HashMap<>();
-        artifact.put("image", image);
+        artifact.put("image", i);
         artifact.put("category", category);
         artifact.put("description", description);
         artifact.put("lot", lot);

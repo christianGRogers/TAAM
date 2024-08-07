@@ -66,7 +66,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             item.setDescription(getIntent().getStringExtra("DESCRIPTION"));
             item.setCategory(getIntent().getStringExtra("CATEGORY"));
             item.setPeriod(getIntent().getStringExtra("PERIOD"));
-            item.setImgID(getIntent().getIntExtra("IMAGE", R.drawable.mew_vase));
+            item.setImgID(getIntent().getStringExtra("IMAGE"));
         }
 
         return item;

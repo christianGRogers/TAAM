@@ -37,9 +37,10 @@
 
     <Spinner
         android:id="@+id/spinnerPeriod"
-        android:layout_width="412dp"
-        android:layout_height="39dp"
+        android:layout_width="408dp"
+        android:layout_height="35dp"
         android:layout_marginTop="4dp"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerCategory" />
@@ -80,6 +81,17 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerPeriod" />
+
+    <VideoView
+        android:id="@+id/videoView"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="8dp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

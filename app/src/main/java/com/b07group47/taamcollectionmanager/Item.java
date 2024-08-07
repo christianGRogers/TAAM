@@ -16,7 +16,7 @@ public class Item {
     private String category;
     private String period;
     private String description;
-    private int imgID;
+    private String imgID;
 
     public Item() {
     }
@@ -29,12 +29,12 @@ public class Item {
             (String) map.get("description"),
             (String) map.get("category"),
             (String) map.get("period"),
-           0
+                (String) map.get("image")
         );
 
     }
 
-    public Item(long lot, String title, String description, String category, String period, int imgID) {
+    public Item(long lot, String title, String description, String category, String period, String imgID) {
         this.lotNumber = lot;
         this.title = title;
         this.description = description;
@@ -84,11 +84,11 @@ public class Item {
         this.description = description;
     }
 
-    public int getImgID() {
+    public String getImgID() {
         return imgID;
     }
 
-    public void setImgID(int imgID) {
+    public void setImgID(String imgID) {
         this.imgID = imgID;
     }
 

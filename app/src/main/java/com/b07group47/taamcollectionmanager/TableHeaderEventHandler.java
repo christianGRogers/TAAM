@@ -91,7 +91,7 @@ class TableHeaderEventHandler implements IEventHandler {
         table.addCell(title);
         table.setMarginBottom(20);
 
-        Log.d(TAG, "Initialized table with title and logo.");
+        Log.d(TAG, "Initialized table with title");
     }
 }
 

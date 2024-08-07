@@ -111,7 +111,7 @@ public class PDFDocument {
 
         items.forEach(item -> {
             Log.d(TAG, "Processing item with Lot Number: " + item.getLotNumber());
-            addItemDetails(document, item);
+            addItemFields(document, item);
 
             long imgID = item.getLotNumber();
             if (imgID != 0) {
@@ -149,10 +149,6 @@ public class PDFDocument {
 
         document.add(new Paragraph().setMarginTop(10));
         document.add(imageTable);
-    }
-
-    private void addItemDetails(Document document, Item item) {
-        addItemFields(document, item);
     }
 
     private void addItemFields(Document document, Item item) {

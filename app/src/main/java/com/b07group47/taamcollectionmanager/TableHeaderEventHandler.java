@@ -91,15 +91,6 @@ class TableHeaderEventHandler implements IEventHandler {
         table.addCell(title);
         table.setMarginBottom(20);
 
-        // FIX LATER
-        //ImageData data = ImageDataFactory.create("res/drawable/logo.png");
-        //Image img = new Image(data);
-        //img.setWidth(200);
-        //Cell logo = new Cell();
-        //logo.setBorder(Border.NO_BORDER);
-        //logo.add(img);
-        //table.addCell(logo);
-
         Log.d(TAG, "Initialized table with title and logo.");
     }
 }

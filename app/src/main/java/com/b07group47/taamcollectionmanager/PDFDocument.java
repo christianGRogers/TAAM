@@ -1,6 +1,10 @@
 package com.b07group47.taamcollectionmanager;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
+
+import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.io.source.ByteArrayOutputStream;
 import com.itextpdf.kernel.colors.Color;
 import com.itextpdf.kernel.colors.DeviceRgb;
@@ -10,29 +14,28 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.borders.SolidBorder;
-import com.itextpdf.layout.element.*;
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Image;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.property.HorizontalAlignment;
 import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.VerticalAlignment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.CountDownLatch;
 
 public class PDFDocument {
     private static final String TAG = "PDFDocument";
-
-    protected static final Color GRAY = new DeviceRgb(245, 245, 245);
-    protected static final Color GRAY_LINE = new DeviceRgb(212, 212, 212);
-    protected static final Color WHITE = new DeviceRgb(255, 255, 255);
-
-    private final ConcurrentHashMap<Integer, CompletableFuture<Image>> imageMap = new ConcurrentHashMap<>();
+    private static final Color GRAY = new DeviceRgb(245, 245, 245);
+    private static final Color GRAY_LINE = new DeviceRgb(212, 212, 212);
+    private static final Color WHITE = new DeviceRgb(255, 255, 255);
     private final ImageDownloader imageDownloader;
     protected final String documentTitle;
 
@@ -42,76 +45,110 @@ public class PDFDocument {
         Log.d(TAG, "Initialized with document title: " + documentTitle);
     }
 
-    public byte[] generatePdf(List<Item> items) {
+    public byte[] generatePdf(List<Item> items) throws Exception {
         Log.d(TAG, "Starting PDF generation");
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-        int imageCount = (int) items.stream().filter(item -> item.getImgID() != 0).count();
-        Log.d(TAG, "Number of items with non-zero imgID: " + imageCount);
-        CountDownLatch latch = new CountDownLatch(imageCount);
+        Map<Long, Bitmap> imageMap = downloadAllImages(items);
 
         try (PdfDocument pdfDocument = new PdfDocument(new PdfWriter(outputStream));
              Document document = new Document(pdfDocument)) {
 
             TableHeaderEventHandler handler = new TableHeaderEventHandler(document, documentTitle);
             pdfDocument.addEventHandler(PdfDocumentEvent.END_PAGE, handler);
-
-            writeData(document, items, latch);
-
-            Log.d(TAG, "Waiting for image downloads to complete...");
-            if (!latch.await(60, TimeUnit.SECONDS)) {
-                Log.w(TAG, "Timed out waiting for image downloads");
-            } else {
-                Log.d(TAG, "All image downloads completed successfully");
-            }
-
-            Log.d(TAG, "Adding images to document");
-            addImagesToDocument(document, items);
-        } catch (InterruptedException e) {
-            Log.e(TAG, "Interrupted while waiting for image downloads", e);
-            Thread.currentThread().interrupt();
+            writeData(document, items, imageMap);
         }
 
         Log.d(TAG, "PDF generation complete");
         return outputStream.toByteArray();
     }
 
-    private void writeData(Document document, List<Item> items, CountDownLatch latch) {
+    private Map<Long, Bitmap> downloadAllImages(List<Item> items) throws Exception {
+        Log.d(TAG, "Downloading all images");
+        Map<Long, Bitmap> imageMap = new HashMap<>();
+        List<CompletableFuture<Bitmap>> downloadFutures = new ArrayList<>();
+
+        for (Item item : items) {
+            long lotNumber = item.getLotNumber();
+            if (lotNumber != 0) {
+                downloadFutures.add(imageDownloader.downloadImage(lotNumber));
+                Log.d(TAG, "Scheduled download for image: " + lotNumber);
+            }
+        }
+
+        try {
+            List<Bitmap> bitmaps = CompletableFuture.allOf(downloadFutures.toArray(new CompletableFuture[0]))
+                    .thenApply(v -> {
+                        List<Bitmap> results = new ArrayList<>();
+                        for (CompletableFuture<Bitmap> future : downloadFutures) {
+                            try {
+                                results.add(future.get());
+                            } catch (InterruptedException | ExecutionException e) {
+                                Log.e(TAG, "Error fetching image result", e);
+                                // Handle the exception as needed
+                            }
+                        }
+                        return results;
+                    }).get();
+
+            for (int i = 0; i < items.size(); i++) {
+                long lotNumber = items.get(i).getLotNumber();
+                if (lotNumber != 0) {
+                    imageMap.put(lotNumber, bitmaps.get(i));
+                }
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            Log.e(TAG, "Error downloading images", e);
+            throw new Exception("Failed to download images", e);
+        }
+
+        Log.d(TAG, "All images downloaded");
+        return imageMap;
+    }
+
+    private void writeData(Document document, List<Item> items, Map<Long, Bitmap> imageMap) {
         Log.d(TAG, "Starting to write data to the document. Number of items: " + items.size());
 
         items.forEach(item -> {
-            Log.d(TAG, "Processing item with Lot Number: " + item.getLotNumber() + ", Image ID: " + item.getImgID());
-            startDownloadingImage(item.getImgID(), latch);
+            Log.d(TAG, "Processing item with Lot Number: " + item.getLotNumber());
             addItemDetails(document, item);
+
+            long imgID = item.getLotNumber();
+            if (imgID != 0) {
+                Bitmap bitmap = imageMap.get(imgID);
+                insertImage(document, bitmap);
+            }
         });
 
         Log.d(TAG, "Finished writing data to the document.");
     }
 
-    private void startDownloadingImage(int imageId, CountDownLatch latch) {
-        if (imageId != 0) {
-            Log.d(TAG, "Starting download for image ID: " + imageId);
-            CompletableFuture<Image> future = imageDownloader.downloadImage(String.valueOf(imageId));
-            imageMap.put(imageId, future);
-            future.thenRun(latch::countDown)
-                    .exceptionally(e -> {
-                        Log.e(TAG, "Error downloading image", e);
-                        latch.countDown();
-                        return null;
-                    });
-        } else {
-            Log.d(TAG, "Skipping image download for ID: " + imageId + " (zero ID)");
-        }
-    }
+    private void insertImage(Document document, Bitmap bitmap) {
+        Log.d(TAG, "Inserting image");
+        Table imageTable = new Table(1);
 
-    private void addImagesToDocument(Document document, List<Item> items) {
-        items.forEach(item -> {
-            int imgID = item.getImgID();
-            if (imgID != 0) {
-                insertImage(document, imgID);
-            }
-            document.add(new Paragraph());
-        });
+        if (bitmap == null) {
+            Log.w(TAG, "No image found");
+            return;
+        }
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] bitmapData = stream.toByteArray();
+        Image img = new Image(ImageDataFactory.create(bitmapData));
+
+        Cell cell = new Cell()
+                .setTextAlignment(TextAlignment.CENTER)
+                .setHorizontalAlignment(HorizontalAlignment.CENTER)
+                .setVerticalAlignment(VerticalAlignment.MIDDLE)
+                .setBorder(new SolidBorder(GRAY_LINE, 1))
+                .add(img.scaleToFit(114, 114))
+                .setPadding(7);
+        imageTable.addCell(cell);
+        Log.d(TAG, "Image inserted successfully");
+
+        document.add(new Paragraph().setMarginTop(10));
+        document.add(imageTable);
     }
 
     private void addItemDetails(Document document, Item item) {
@@ -137,29 +174,6 @@ public class PDFDocument {
         itemFields.add("Period", item.getPeriod());
         itemFields.add("Description", item.getDescription());
         return itemFields;
-    }
-
-    private void insertImage(Document document, int imageId) {
-        Log.d(TAG, "Inserting image with ID: " + imageId);
-        Table imageTable = new Table(1);
-
-        try {
-            Image img = imageMap.get(imageId).get();
-            Cell cell = new Cell()
-                    .setTextAlignment(TextAlignment.CENTER)
-                    .setHorizontalAlignment(HorizontalAlignment.CENTER)
-                    .setVerticalAlignment(VerticalAlignment.MIDDLE)
-                    .setBorder(new SolidBorder(GRAY_LINE, 1))
-                    .add(img.scaleToFit(114, 114))
-                    .setPadding(7);
-            imageTable.addCell(cell);
-            Log.d(TAG, "Image inserted successfully");
-        } catch (InterruptedException | ExecutionException e) {
-            Log.e(TAG, "Error inserting image", e);
-        }
-
-        document.add(new Paragraph().setMarginTop(10));
-        document.add(imageTable);
     }
 
     private Table createTable(TableFields tableFields) {
@@ -219,7 +233,7 @@ public class PDFDocument {
     }
 
     private static class TableFields {
-        private List<TableField> fieldList = new ArrayList<>();
+        private final List<TableField> fieldList = new ArrayList<>();
 
         private void add(String displayName, Object value) {
             fieldList.add(new TableField(displayName, value));

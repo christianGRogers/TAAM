@@ -23,7 +23,12 @@ public class PDFGenerator {
         PDFDocument pdfDocument = new PDFDocument(imageDownloader);
 
         Log.d(TAG, "generateReport: Generating PDF bytes for items");
-        byte[] pdfBytes = pdfDocument.generatePdf(items);
+        byte[] pdfBytes = null;
+        try {
+            pdfBytes = pdfDocument.generatePdf(items);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
         Log.d(TAG, "generateReport: Saving PDF to storage");
         File pdfFile = savePdfToStorage(context, pdfBytes, reportTitle);

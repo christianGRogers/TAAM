@@ -37,6 +37,9 @@ public class ImageDownloader {
         return CompletableFuture.supplyAsync(() -> {
             try {
                 byte[] bytes = Tasks.await(imageRef.getBytes(Long.MAX_VALUE), TIMEOUT_SECONDS, TimeUnit.SECONDS);
+                if (bytes == null || bytes.length == 0) {
+                    throw new RuntimeException("Downloaded image bytes are empty");
+                }
                 Log.d(TAG, "Successfully downloaded image bytes for Lot Number: " + lotNumber);
                 Bitmap bm = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                 return rotateBitmap(bm, 90);
@@ -53,6 +56,11 @@ public class ImageDownloader {
     }
 
     private Bitmap rotateBitmap(Bitmap source, float angle) {
+        if (source == null) {
+            Log.e(TAG, "Bitmap is null, cannot rotate.");
+            return null;
+        }
+
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);
         return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);

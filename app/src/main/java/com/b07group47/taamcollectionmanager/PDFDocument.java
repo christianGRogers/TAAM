@@ -124,13 +124,13 @@ public class PDFDocument {
     }
 
     private void insertImage(Document document, Bitmap bitmap) {
-        Log.d(TAG, "Inserting image");
-        Table imageTable = new Table(1);
-
         if (bitmap == null) {
-            Log.w(TAG, "No image found");
+            Log.w(TAG, "No image found, skipping insertion.");
             return;
         }
+
+        Log.d(TAG, "Inserting image");
+        Table imageTable = new Table(1);
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);

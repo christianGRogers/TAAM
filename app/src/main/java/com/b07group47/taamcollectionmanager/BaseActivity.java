@@ -3,6 +3,7 @@ package com.b07group47.taamcollectionmanager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -34,8 +35,17 @@ public abstract class BaseActivity extends AppCompatActivity {
      * in the xml of the activity
      */
     private void createTitleBar() {
-        boolean isMainScreen = layoutID == R.layout.activity_main;
-        TitleBarFragment titleBarFragment = TitleBarFragment.newInstance(isMainScreen);
+        String currentScreen;
+        if (layoutID == R.layout.activity_main) {
+            currentScreen = "MAIN_SCREEN";
+        } else if (layoutID == R.layout.activity_admin) {
+            currentScreen = "ADMIN_SCREEN";
+        } else if (layoutID == R.layout.activity_search) {
+            currentScreen = "SEARCH_SCREEN";
+        } else {
+            currentScreen = "OTHER";
+        }
+        TitleBarFragment titleBarFragment = TitleBarFragment.newInstance(currentScreen);
         getSupportFragmentManager().beginTransaction().replace(R.id.titleBarContainer, titleBarFragment).commit();
     }
 

@@ -125,11 +125,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             reportBtn = itemView.findViewById(R.id.reportIcon);
             deleteBtn = itemView.findViewById(R.id.deleteIcon);
 
-            Bundle b = new Bundle();
-
             itemView.setOnClickListener(v -> openActivity(ViewActivity.class));
             reportBtn.setOnClickListener(v -> openActivity(ReportActivity.class));
-
             deleteBtn.setOnClickListener(v -> openActivity(DeleteItemActivity.class));
         }
         /**

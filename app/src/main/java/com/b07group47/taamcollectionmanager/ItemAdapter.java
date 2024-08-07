@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -122,14 +123,19 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             cardCategory = itemView.findViewById(R.id.cardCategory);
             cardPeriod = itemView.findViewById(R.id.cardPeriod);
             cardImg = itemView.findViewById(R.id.cardImage);
-            reportBtn = itemView.findViewById(R.id.reportIcon);
-            deleteBtn = itemView.findViewById(R.id.deleteIcon);
-
-            Bundle b = new Bundle();
 
             itemView.setOnClickListener(v -> openActivity(ViewActivity.class));
-            reportBtn.setOnClickListener(v -> openActivity(ReportActivity.class));
 
+//            Hides the buttons on the card from a user who is not an admin
+            if (!UserState.isAdmin()) {
+                ConstraintLayout btnsContainer = itemView.findViewById(R.id.cardBtnsContainer);
+                btnsContainer.setVisibility(View.GONE);
+                return;
+            }
+
+            reportBtn = itemView.findViewById(R.id.reportIcon);
+            deleteBtn = itemView.findViewById(R.id.deleteIcon);
+            reportBtn.setOnClickListener(v -> openActivity(ReportActivity.class));
             deleteBtn.setOnClickListener(v -> openActivity(DeleteItemActivity.class));
         }
         /**

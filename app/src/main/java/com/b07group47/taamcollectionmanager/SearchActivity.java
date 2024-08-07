@@ -6,14 +6,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
-
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.model.mutation.ArrayTransformOperation;
-
-import java.io.Serializable;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 
 public class SearchActivity extends BaseActivity {
     private EditText editTextLotNumber, editTextName;
@@ -43,7 +35,7 @@ public class SearchActivity extends BaseActivity {
         adapter = ArrayAdapter.createFromResource(this, R.array.periods_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerPeriod.setAdapter(adapter);
-    
+
         buttonSearch.setOnClickListener(v -> searchItem());
     }
 
@@ -57,8 +49,7 @@ public class SearchActivity extends BaseActivity {
         if (!lotNumber.isEmpty()) {
             b.putLong("lot", Long.parseLong(lotNumber));
         }
-        if (!name.isEmpty())
-            b.putString("name", name);
+        if (!name.isEmpty()) b.putString("name", name);
         if (!category.isEmpty() && !category.equals(getResources().getStringArray(R.array.categories_array)[0])) {
             b.putString("category", category);
         }

@@ -56,10 +56,9 @@ public class AdminActivity extends BaseActivity {
         });
 
         buttonLogout.setOnClickListener(v -> {
-            Toast.makeText(this, "Logout successful.", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("fromAdmin", false); // Pass the extra
-            switchToActivity(intent);
+            Toast.makeText(this, "Logout successful", Toast.LENGTH_SHORT).show();
+            UserState.setIsAdmin(false);
+            switchToActivity(new Intent(this, MainActivity.class));
         });
     }
 
@@ -96,9 +95,8 @@ public class AdminActivity extends BaseActivity {
         if (user != null) {
             // User is signed in, navigate to the main activity or whatever is appropriate
             Toast.makeText(this, "Authentication successful.", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("fromAdmin", true); // Pass the extra
-            switchToActivity(intent);
+            UserState.setIsAdmin(true);
+            switchToActivity(new Intent(this, MainActivity.class));
         } else {
             // User is signed out, handle appropriately
         }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -25,7 +26,7 @@ public class DeleteItemActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         db = FirebaseFirestore.getInstance();
-        getLotFromIntent();
+        lot = getIntent().getLongExtra("LOT", -1);
         firebaseStorage = FirebaseStorage.getInstance();
         storageRef = firebaseStorage.getReference();
 
@@ -33,14 +34,9 @@ public class DeleteItemActivity extends BaseActivity {
     }
 
 
-    private void initButtons(){
+    private void initButtons() {
         buttonDelete = findViewById(R.id.buttonDelete);
         buttonDelete.setOnClickListener(v -> deleteItemByTitle());
-    }
-
-
-    private void getLotFromIntent(){
-        lot = getIntent().getLongExtra("LOT", -1);
     }
 
 
@@ -50,10 +46,8 @@ public class DeleteItemActivity extends BaseActivity {
     }
 
 
-    private void backtoMain(){
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("fromAdmin", true); // Pass the extra
-        startActivity(intent);
+    private void backtoMain() {
+        startActivity(new Intent(this, MainActivity.class));
         finish();
     }
 
@@ -68,15 +62,13 @@ public class DeleteItemActivity extends BaseActivity {
         query.get().addOnCompleteListener(task -> {
             if (task.isSuccessful() && !task.getResult().isEmpty()) {
                 // Assuming there is only one document with the given lot value
-                task.getResult().getDocuments().get(0).getReference().delete()
-                        .addOnSuccessListener(aVoid -> {
-                            Toast.makeText(DeleteItemActivity.this, "Item deleted successfully", Toast.LENGTH_SHORT).show();
-                            backtoMain();
-                        })
-                        .addOnFailureListener(e -> {
-                            Toast.makeText(DeleteItemActivity.this, "Error deleting item", Toast.LENGTH_SHORT).show();
-                            backtoMain();
-                        });
+                task.getResult().getDocuments().get(0).getReference().delete().addOnSuccessListener(aVoid -> {
+                    Toast.makeText(DeleteItemActivity.this, "Item deleted successfully", Toast.LENGTH_SHORT).show();
+                    backtoMain();
+                }).addOnFailureListener(e -> {
+                    Toast.makeText(DeleteItemActivity.this, "Error deleting item", Toast.LENGTH_SHORT).show();
+                    backtoMain();
+                });
             } else {
                 Toast.makeText(DeleteItemActivity.this, "Item not found", Toast.LENGTH_SHORT).show();
                 backtoMain();
@@ -86,7 +78,7 @@ public class DeleteItemActivity extends BaseActivity {
             backtoMain();
         });
         //delete image
-        imageRef = storageRef.child("images/"+ lot +".jpg");
+        imageRef = storageRef.child("images/" + lot + ".jpg");
         imageRef.delete().addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {

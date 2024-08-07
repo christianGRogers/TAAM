@@ -57,6 +57,6 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-auth:22.0.0") // Check for the latest version
 
-
-
+    // iText 7
+    implementation("com.itextpdf:itext7-core:7.1.13")
 }

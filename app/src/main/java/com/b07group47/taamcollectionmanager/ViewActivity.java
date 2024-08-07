@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.MediaController;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -32,10 +33,13 @@ public class ViewActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         mediaController = new MediaController(this);
         item = getPassedAttributes();
-        initButtons();
+        if (UserState.isAdmin())
+            initButtons();
+        else {
+            LinearLayout btnsContainer = findViewById(R.id.btnsContainer);
+            btnsContainer.setVisibility(View.GONE);
+        }
         setLayoutValues();
-        handleIntent();
-
     }
 
     private void initButtons() {
@@ -135,10 +139,5 @@ public class ViewActivity extends BaseActivity {
     @Override
     protected int getLayoutResourceId() {
         return R.layout.activity_view;
-    }
-
-    private void handleIntent() {
-        //ill fix this later
-        buttonDeleteItem.setVisibility(View.VISIBLE);
     }
 }

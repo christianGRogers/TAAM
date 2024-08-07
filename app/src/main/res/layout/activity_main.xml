@@ -146,7 +146,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_end="132dp" />
+        app:layout_constraintGuide_percent="0.8" />
 
     <ImageView
         android:id="@+id/buttonAddItem"
@@ -159,8 +159,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/bottomGuideline"
-        android:visibility="gone"/>
+        app:layout_constraintTop_toBottomOf="@+id/bottomGuideline" />
 
     <Button
         android:id="@+id/buttonReport"
@@ -172,8 +171,7 @@
         app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/bottomGuideline"
-        app:layout_constraintVertical_bias="0.809"
-        android:visibility="gone"/>
+        app:layout_constraintVertical_bias="0.8" />
 
     <TextView
         android:id="@+id/emptyText"
@@ -188,17 +186,13 @@
 
     <Button
         android:id="@+id/clearSearch"
-        android:layout_width="146dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="38dp"
-        android:layout_marginBottom="48dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/clear_search"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/table_layout"
-        app:layout_constraintVertical_bias="0.0" />
-
+        app:layout_constraintTop_toBottomOf="@+id/bottomGuideline"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

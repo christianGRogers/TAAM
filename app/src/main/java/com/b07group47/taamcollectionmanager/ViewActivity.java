@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,10 +26,13 @@ public class ViewActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         item = getPassedAttributes();
-        initButtons();
+        if (UserState.isAdmin())
+            initButtons();
+        else {
+            LinearLayout btnsContainer = findViewById(R.id.btnsContainer);
+            btnsContainer.setVisibility(View.GONE);
+        }
         setLayoutValues();
-        handleIntent();
-
     }
 
     private void initButtons() {
@@ -83,7 +87,7 @@ public class ViewActivity extends BaseActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                Toast.makeText(getApplicationContext(), "No Such file or Path found!!"+lot, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "No image found for this item", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -91,10 +95,5 @@ public class ViewActivity extends BaseActivity {
     @Override
     protected int getLayoutResourceId() {
         return R.layout.activity_view;
-    }
-
-    private void handleIntent() {
-        //ill fix this later
-        buttonDeleteItem.setVisibility(View.VISIBLE);
     }
 }

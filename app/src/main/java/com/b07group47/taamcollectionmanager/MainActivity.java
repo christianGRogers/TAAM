@@ -3,20 +3,18 @@ package com.b07group47.taamcollectionmanager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
-
-
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.Guideline;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +33,7 @@ public class MainActivity extends BaseActivity {
 
     /**
      * Equivalent to a constructor of the activity
+     *
      * @param savedInstanceState the saved parameters of the activity
      */
     @Override
@@ -82,7 +81,7 @@ public class MainActivity extends BaseActivity {
         query.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 QuerySnapshot qs = task.getResult();
-                if ( qs.isEmpty()) {
+                if (qs.isEmpty()) {
                     Log.d(TAG, "Empty query results.");
                 }
                 for (DocumentSnapshot d : qs.getDocuments()) {
@@ -108,15 +107,17 @@ public class MainActivity extends BaseActivity {
 
     private void handleIntent() {
         Intent intent = getIntent();
-        boolean fromAdmin = intent.getBooleanExtra("fromAdmin", false);
-        Log.d(TAG, "fromAdmin: " + fromAdmin); // Log the value of fromAdmin
-        if (fromAdmin) {
-            // Show the buttons if coming from AdminActivity
-            Log.d(TAG, "AdminActivity detected, showing buttons.");
-            buttonReport.setVisibility(View.VISIBLE);
-            buttonAdd.setVisibility(View.VISIBLE);
+
+        Guideline bottomGuideline = findViewById(R.id.bottomGuideline);
+
+        if (UserState.isAdmin()) {
+            Log.d(TAG, "User is an admin");
         } else {
-            Log.d(TAG, "AdminActivity not detected, buttons remain hidden.");
+            Log.d(TAG, "User is not an admin, hiding the buttons");
+//            Hides the button drawer, making the table take up the whole screen
+            bottomGuideline.setGuidelinePercent(1.0f);
+            buttonReport.setVisibility(View.GONE);
+            buttonAdd.setVisibility(View.GONE);
         }
 
         // handle Search inputs. if none present, query factory handles that
@@ -124,11 +125,15 @@ public class MainActivity extends BaseActivity {
         Bundle b = intent.getExtras();
 
         // if not a search
-        if ( b == null || !intent.getBooleanExtra("fromSearch", false) ) {
+        if (b == null || !intent.getBooleanExtra("fromSearch", false)) {
             insertData(ArtifactQueryFactory.getAll());
-            clearSearch.setVisibility(View.INVISIBLE);
             return;
         }
+
+        // if a search
+        bottomGuideline.setGuidelinePercent(.8f);
+        buttonAdd.setVisibility(View.GONE);
+        clearSearch.setVisibility(View.VISIBLE);
 
         Long lot = b.getLong("lot", -1);
         if (lot == -1) lot = null;
@@ -136,10 +141,10 @@ public class MainActivity extends BaseActivity {
         String category = b.getString("category", null);
         String period = b.getString("period", null);
 
-        Log.d(TAG, "lot: "+lot);
-        Log.d(TAG, "name: "+name);
-        Log.d(TAG, "category: "+category);
-        Log.d(TAG, "period: "+period);
+        Log.d(TAG, "lot: " + lot);
+        Log.d(TAG, "name: " + name);
+        Log.d(TAG, "category: " + category);
+        Log.d(TAG, "period: " + period);
 
         //only searches non-null fields
         Query searchQuery = ArtifactQueryFactory.getFilteredQuery(lot, name, category, period);

@@ -25,7 +25,7 @@ public class DeleteItemActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         db = FirebaseFirestore.getInstance();
-        getLotFromIntent();
+        lot = getIntent().getLongExtra("LOT", -1);
         firebaseStorage = FirebaseStorage.getInstance();
         storageRef = firebaseStorage.getReference();
 
@@ -39,11 +39,6 @@ public class DeleteItemActivity extends BaseActivity {
     }
 
 
-    private void getLotFromIntent(){
-        lot = getIntent().getLongExtra("LOT", -1);
-    }
-
-
     @Override
     protected int getLayoutResourceId() {
         return R.layout.activity_delete_item;
@@ -51,9 +46,7 @@ public class DeleteItemActivity extends BaseActivity {
 
 
     private void backtoMain(){
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("fromAdmin", true); // Pass the extra
-        startActivity(intent);
+        startActivity(new Intent(this, MainActivity.class));
         finish();
     }
 

@@ -124,6 +124,7 @@
         app:srcCompat="@drawable/mew_vase" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cardBtnsContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="5dp"

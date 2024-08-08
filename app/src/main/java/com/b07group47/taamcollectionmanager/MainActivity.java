@@ -30,6 +30,7 @@ public class MainActivity extends BaseActivity {
     private ImageView buttonAdd;
     private TextView emptyText;
     private Button clearSearch;
+    private TextView searchParams;
 
     /**
      * Equivalent to a constructor of the activity
@@ -53,6 +54,7 @@ public class MainActivity extends BaseActivity {
         emptyText.setVisibility(View.VISIBLE);
         clearSearch = findViewById(R.id.clearSearch);
         clearSearch.setOnClickListener((v -> switchToActivity(new Intent(this, MainActivity.class))));
+        searchParams = findViewById(R.id.searchParams);
     }
 
     @Override
@@ -134,12 +136,32 @@ public class MainActivity extends BaseActivity {
         bottomGuideline.setGuidelinePercent(.8f);
         buttonAdd.setVisibility(View.GONE);
         clearSearch.setVisibility(View.VISIBLE);
+        searchParams.setVisibility(View.VISIBLE);
 
         Long lot = b.getLong("lot", -1);
         if (lot == -1) lot = null;
         String name = b.getString("name", null);
         String category = b.getString("category", null);
         String period = b.getString("period", null);
+
+        StringBuilder sb = new StringBuilder();
+
+        if (lot != null) {
+            sb.append("Lot: ");
+            sb.append(lot);
+        }
+        if (name != null) {
+            sb.append("\nName: ");
+            sb.append(name);
+        }
+        if (category != null) {
+            sb.append("\nCategory: ");
+            sb.append(category);
+        }
+        if (period != null) {
+            sb.append("\nPeriod: ");
+            sb.append(period);
+        }
 
         Log.d(TAG, "lot: " + lot);
         Log.d(TAG, "name: " + name);
@@ -153,5 +175,6 @@ public class MainActivity extends BaseActivity {
             return;
         }
         insertData(searchQuery);
+        searchParams.setText(sb.toString().trim());
     }
 }

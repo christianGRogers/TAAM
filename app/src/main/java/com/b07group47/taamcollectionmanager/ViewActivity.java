@@ -3,13 +3,16 @@ package com.b07group47.taamcollectionmanager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 
@@ -18,13 +21,17 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.net.URLConnection;
+
 public class ViewActivity extends BaseActivity {
     private Button buttonDeleteItem, buttonReportItem;
     private Item item;
+    private MediaController mediaController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mediaController = new MediaController(this);
         item = getPassedAttributes();
         if (UserState.isAdmin())
             initButtons();
@@ -66,6 +73,7 @@ public class ViewActivity extends BaseActivity {
         TextView itemCategory = findViewById(R.id.itemCategory);
         TextView itemPeriod = findViewById(R.id.itemPeriod);
         setImage((int)item.getLotNumber());
+        //setVideo((int)item.getLotNumber());
         itemLot.setText("Lot# " + item.getLotNumber());
         itemTitle.setText(item.getTitle());
         itemDescription.setText(item.getDescription());
@@ -73,23 +81,59 @@ public class ViewActivity extends BaseActivity {
         itemPeriod.setText("Period: " + item.getPeriod());
     }
 
+    private void setVideo(int lot) {
+
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        StorageReference imageRef = storageReference.child("images/" + lot + ".jpg");
+        //String mimetype = URLConnection.guessContentTypeFromName(filePath.toString());
+
+
+    }
+
+
     private void setImage(int lot){
+        VideoView itemVideo = findViewById(R.id.itemVideo);
         ImageView itemImage = findViewById(R.id.itemImage);
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
         StorageReference imageRef = storageReference.child("images/"+ lot +".jpg");
-        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+        imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
-            public void onSuccess(byte[] bytes) {
-                Bitmap bm = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                itemImage.setImageBitmap(bm);
-                itemImage.setRotation(90);
+            public void onSuccess(Uri uri) {
+                //String mimetype = URLConnection.guessContentTypeFromName(uri.toString());
+                String mimetype = item.getImgID();
+                if (mimetype.equals("image/jpeg")) {
+                    imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                        @Override
+                        public void onSuccess(byte[] bytes) {
+                            Bitmap bm = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                            itemImage.setImageBitmap(bm);
+                            itemImage.setRotation(90);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            Toast.makeText(getApplicationContext(), "No Such file or Path found!!", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+                else{
+                    itemImage.setVisibility(View.INVISIBLE);
+                    itemVideo.setVisibility(View.VISIBLE);
+                    mediaController.setAnchorView(itemVideo);
+                    mediaController.setMediaPlayer(itemVideo);
+                    itemVideo.setMediaController(mediaController);
+                    itemVideo.setVideoURI(Uri.parse(uri.toString()));
+                    itemVideo.start();
+                }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onFailure(@NonNull Exception exception) {
-                Toast.makeText(getApplicationContext(), "No image found for this item", Toast.LENGTH_LONG).show();
+            public void onFailure(@NonNull Exception e) {
+                return;
             }
         });
+
+
     }
 
     @Override

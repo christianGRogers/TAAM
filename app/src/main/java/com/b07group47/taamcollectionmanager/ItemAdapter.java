@@ -81,6 +81,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
                 Bitmap bm = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                 holder.cardImg.setImageBitmap(bm);
                 holder.cardImg.setRotation(90);
+                holder.imagePlaceholder.setVisibility(View.INVISIBLE);
             }
         });
     }
@@ -103,7 +104,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
         private final Context context;
         private final List<Item> items;
-        TextView lotNum, cardHeader, cardDesc, cardCategory, cardPeriod;
+        TextView lotNum, cardHeader, cardDesc, cardCategory, cardPeriod, imagePlaceholder;
         ImageView cardImg, reportBtn, deleteBtn;
 
         /**
@@ -123,6 +124,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             cardCategory = itemView.findViewById(R.id.cardCategory);
             cardPeriod = itemView.findViewById(R.id.cardPeriod);
             cardImg = itemView.findViewById(R.id.cardImage);
+            imagePlaceholder = itemView.findViewById(R.id.imagePlaceholder);
 
             itemView.setOnClickListener(v -> openActivity(ViewActivity.class));
 
